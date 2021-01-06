@@ -1,9 +1,9 @@
 @extends('layouts/main')
 
 @if (auth()->user()->role_id == "1")
-    @section('title', 'Admin | Tabel Projek')
+    @section('title', 'Admin | Data Projek')
 @elseif (auth()->user()->role_id == "2")
-    @section('title', 'Member | Tabel Projek')
+    @section('title', 'Member | Data Projek')
 @endif
 
 @section('container')
@@ -46,7 +46,7 @@
         <div class="row">
             @foreach($Projects as $Project)
                 <div class="col-md-3">
-                    <a href="/project/{{$Project->id}}/ticket" style="text-decoration: none">
+                    <a href="/project/{{$Project->id}}/ticket" class="text-decoration-none">
                         <div class="card shadow mb-4">
                             <div class="card-body">
                                 <h5 class="card-title text-black-50">{{ $Project->name }}</h5>
@@ -56,12 +56,15 @@
                                     @endforeach
                                 </p>
                                 <p class="card-text text-black-50 mb-3">
-                                    <b>Users assigned:</b>
+                                    <b>Total Issue:
+                                    </b>
                                 </p>
                                 <p class="card-text text-black-50 mb-3">
-                                    @foreach($Project->ProjectAssigned as $item)
-                                        <img src="{{ asset('storage/photos/upload/avatar/'.$item->AssignedTo->avatar) }}" alt="avatar" width="40px" class="rounded-circle">
-                                    @endforeach
+                                        @if ($Project->Ticket->count() < 0)
+                                            Belum Ada Issue
+                                        @else
+                                            <i class="fas fa-circle text-primary"></i><span class="p ml-3">{{$Project->Ticket->count()}} Issues ({{$Project->Ticket->where("priority_id", 4)->count()}} Urgent) </span> <br>
+                                        @endif
                                 </p>
                                 @if(auth()->user()->role_id == "1")
                                     <a href="/project/{{ $Project->id }}/edit" class="btn btn-small text-success">

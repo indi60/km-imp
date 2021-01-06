@@ -1,6 +1,7 @@
 <?php
 
 use App\Article;
+use App\Job;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -16,9 +17,13 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    $Articles = Article::where('status_article_id', '1')->get();
-    return view('welcome', compact('Articles'));
-});
+    $Articles = Article::where('status_article_id', '1')->take(9)->get();
+    $Jobs = Job::all();
+    return view('landing_page.welcome', compact('Articles', 'Jobs'));
+})->name('welcome');
+
+Route::resource('post', 'PostController');
+Route::get('/post/{id}/show', 'PostController@show');
 
 Auth::routes();
 
@@ -38,11 +43,12 @@ Route::post('ckeditor/store', 'TicketController@store')->name('upload.store');
 Route::post('ckeditor/update{$id}', 'TicketController@update')->name('upload.update');
 
 Route::group(['middleware' => ['auth', 'CekRole:1,2,3']], function () {
-    Route::get('filter_status_open', 'TicketController@filter_status_open');
-    Route::get('filter_status_closed', 'TicketController@filter_status_closed');
+    //filter status
+    Route::get('/project/{id}/filter_status_open', 'TicketController@filter_status_open');
+    Route::get('/project/{id}/filter_status_closed', 'TicketController@filter_status_closed');
+
     Route::put('profile/password', 'ProfileController@changePassword')->name('profile.password');
     Route::get('/article/{id}/show', 'ArticleController@show');
-    // Route::resource('ticket', 'TicketController');
 
     //ticket
     Route::get('/project/ticket', 'TicketController@index');
@@ -56,31 +62,37 @@ Route::group(['middleware' => ['auth', 'CekRole:1,2,3']], function () {
 
 Route::group(['middleware' => ['auth', 'CekRole:1,2']], function () {
     Route::get('/home', 'HomeController@index')->name('home');
-    Route::resource('comment', 'CommentController');
-    Route::resource('profile', 'ProfileController');
     Route::resource('article', 'ArticleController');
 
+    //project
     Route::get('/project', 'Admin\ProjectController@index');
     Route::get('/project/{id}/ticket', 'Admin\ProjectController@show');
 
+    //profile
+    Route::resource('profile', 'ProfileController');
     Route::resource('image-profile', 'ImageProfileController');
+
+    //comment system
+    Route::resource('comment', 'CommentController');
     Route::resource('comment-reply', 'CommentReplyController');
 });
 
 Route::group(['middleware' => ['auth', 'CekRole:1']], function () {
-    Route::resource('role', 'Admin\RoleController');
-    Route::resource('job', 'Admin\JobController');
-    Route::resource('category-project', 'Admin\CategoryProjectController');
-    Route::resource('priority', 'Admin\PriorityController');
-    Route::resource('status', 'Admin\StatusController');
     Route::resource('manage-member', 'Admin\ManageMemberController');
-    Route::resource('setting', 'Admin\SettingController');
+    Route::resource('category-project', 'Admin\CategoryProjectController');
     Route::resource('laporan', 'Admin\LaporanController');
+
+    //Data setting
+    Route::resource('description', 'Admin\Setting\DescriptionController');
+    Route::resource('role', 'Admin\Setting\RoleController');
+    Route::resource('job', 'Admin\Setting\JobController');
+    Route::resource('priority', 'Admin\Setting\PriorityController');
+    Route::resource('status', 'Admin\Setting\StatusController');
+    Route::resource('setting', 'Admin\Setting\SettingController');
 
     //Export PDF and Excel
     Route::get('/exportExcel', 'Admin\LaporanController@exportExcel')->name('exportExcel');
     Route::get('/exportPDF', 'Admin\LaporanController@exportPDF')->name('exportPDF');
-    // Route::resource('project', 'Admin\ProjectController');
 
     //Project
     Route::get('/project/create', 'Admin\ProjectController@create');

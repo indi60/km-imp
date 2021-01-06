@@ -31,7 +31,7 @@ class Ticket extends Model
 
     public function Project()
     {
-        return $this->hasMany('App\Project', 'id', 'project_id');
+        return $this->belongsTo('App\Project');
     }
 
     public function Status()

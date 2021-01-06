@@ -51,24 +51,6 @@
                     </div>
                 </div>
 
-                {{-- <div class="form-group">
-                    <label for="status_id">Status</label>
-                    <div class="input-group mb-3">
-                        <select class="custom-select form-control @error('status_id') is-invalid @enderror" id="status_id"
-                            placeholder="Masukan Job" name="status_id" value="{{ old('status_id') }}">
-                            <option value="0" selected>Pilih Status</option>
-                            @foreach($Statuses as $Status)
-                                <option value="{{ $Status->id }}">
-                                    {{ $Status->name }}
-                                </option>
-                            @endforeach
-                        </select>
-                        @error('status_id')
-                            <div class="invalid-feedback">{{ $message }}</div>
-                        @enderror
-                    </div>
-                </div> --}}
-
                 <div class="form-group">
                     <label for="priority_id">Priority</label>
                     <div class="input-group mb-3">
@@ -96,7 +78,7 @@
                 </div>
 
                 <div class="form-group">
-                    <button style="width: 20%;" class="btn btn-small btn-success btn-block" type="submit"><i
+                    <button style="width: 20%;" class="btn btn-small btn-success btn-block" type="submit" id="button"><i
                             class="far fa-save"></i><span class="ml-2">save changes</span>
                     </button>
                 </div>
@@ -110,7 +92,7 @@
 <!-- container-fluid -->
 
 @section('js')
-    <script src="https://cdn.ckeditor.com/4.12.1/standard/ckeditor.js"></script>
+    <script src="https://cdn.ckeditor.com/4.12.1/full/ckeditor.js"></script>
     <script type="text/javascript">
         CKEDITOR.replace('content-ticket', {
             filebrowserUploadUrl: "{{ route('upload.upload', ['_token' => csrf_token() ])}}",

@@ -23,8 +23,8 @@ class CreateTicketsTable extends Migration
             $table->string('author_name');
             $table->string('author_email');
             $table->unsignedBigInteger('assigned_to_user')->nullable();
-            $table->unsignedBigInteger('status_id');
-            $table->unsignedBigInteger('priority_id');
+            $table->unsignedBigInteger('status_id')->nullable();
+            $table->unsignedBigInteger('priority_id')->nullable();
             $table->timestamps();
         });
     }

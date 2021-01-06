@@ -4,7 +4,6 @@
     <div class="container">
         <div class="row" style="margin-left: 50px">
             <div class="col">
-
                 <ul class="navbar-nav ml-auto">
                         <!-- Nav Item - Search Dropdown (Visible Only XS) -->
                         <li class="nav-item dropdown no-arrow d-sm-none">
@@ -37,7 +36,7 @@
                 </button>
 
                 <!-- Topbar Search -->
-                <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
+                {{-- <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
                     <div class="input-group">
                         <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..."
                             aria-label="Search" aria-describedby="basic-addon2">
@@ -47,7 +46,7 @@
                             </button>
                         </div>
                     </div>
-                </form>
+                </form> --}}
 
                 <h1 class="text-lg-left mt-3 text-white"><strong>Welcome Back <br>{{ Auth::user()->name }}!</strong>
                 </h1>
@@ -65,7 +64,7 @@
                     <div class="card-body">
                         <div class="row no-gutters align-items-center">
                             <div class="col mr-5">
-                                <img src="{{ (asset('images/logo/project-topbar.svg')) }}"
+                                <img src="{{ (asset('assets/images/logo/project-topbar.svg')) }}"
                                     width="70" class="mr-5" alt="" srcset="">
                             </div>
                             <div class="col-auto">
@@ -84,14 +83,14 @@
                     <div class="card-body">
                         <div class="row no-gutters align-items-center">
                             <div class="col mr-5">
-                                <img src="{{ (asset('images/logo/issue-topbar.svg')) }}"
-                                    width="70" alt="" srcset="">
+                                <img src="{{ (asset('assets/images/logo/issue-topbar.svg')) }}"
+                                    width="70" class="mr-5" alt="" srcset="">
                             </div>
                             <div class="col-auto">
                                 <div class="h5 mb-0 font-weight-bold" style="font-size: 40px; color: black">
                                     {{ $count_total_tiket }}
                                 </div>
-                                <div class="p mb-0 font-weight-bold" style="color: black">Issues</div>
+                                <div class="h6 mb-0 font-weight-bold" style="color: black">Issues</div>
                             </div>
                         </div>
                     </div>

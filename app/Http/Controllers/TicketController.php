@@ -20,20 +20,7 @@ class TicketController extends Controller
      */
     public function index()
     {
-        if (Auth::user()->role_id == "1") {
-            $count_total_project = Project::all()->count();
-            $count_total_tiket = Ticket::all()->count();
-            $Tickets = Ticket::all();
-            $count_open_ticket = Ticket::where('status_id', '1')->count();
-            $count_closed_ticket = Ticket::where('status_id', '2')->count();
-        } else {
-            $count_total_project = Project::all()->count();
-            $count_total_tiket = Ticket::all()->count();
-            $count_open_ticket = Ticket::where('status_id', '1')->where('assigned_to_user', Auth::user()->id)->count();
-            $count_closed_ticket = Ticket::where('status_id', '2')->where('assigned_to_user', Auth::user()->id)->count();
-            $Tickets = Ticket::where('assigned_to_user', Auth::user()->id)->get();
-        }
-        return view('ticket.index', compact('Tickets', 'idProject', 'count_open_ticket', 'count_closed_ticket', 'count_total_project', 'count_total_tiket'));
+        //
     }
 
     /**
@@ -210,7 +197,7 @@ class TicketController extends Controller
     public function filter_status_open()
     {
         if (Auth::user()->role_id == "1") {
-             // get id project
+            // get id project
             $idProject = session('findIdProjects');
 
             $count_total_project = Project::all()->count();
@@ -218,8 +205,9 @@ class TicketController extends Controller
             $count_open_ticket = Ticket::where('status_id', '1')->where('project_id', $idProject)->count();
             $count_closed_ticket = Ticket::where('status_id', '2')->where('project_id', $idProject)->count();
             $Tickets = Ticket::where('status_id', '1')->where('project_id', $idProject)->get();
+            $Projects = Project::find($idProject);
         } else {
-             // get id project
+            // get id project
             $idProject = session('findIdProjects');
 
             $count_total_project = Project::all()->count();
@@ -227,14 +215,15 @@ class TicketController extends Controller
             $count_open_ticket = Ticket::where('status_id', '1')->where('assigned_to_user', Auth::user()->id)->count();
             $count_closed_ticket = Ticket::where('status_id', '2')->where('assigned_to_user', Auth::user()->id)->count();
             $Tickets = Ticket::where('assigned_to_user', Auth::user()->id)->where('status_id', '1')->get();
+            $Projects = Project::find($idProject);
         }
-        return view('admin.project.show', compact('Tickets', 'idProject', 'count_open_ticket', 'count_closed_ticket', 'count_total_project', 'count_total_tiket'));
+        return view('admin.project.show', compact('Tickets', 'Projects', 'idProject', 'count_open_ticket', 'count_closed_ticket', 'count_total_project', 'count_total_tiket'));
     }
 
     public function filter_status_closed()
     {
         if (Auth::user()->role_id == "1") {
-             // get id project
+            // get id project
             $idProject = session('findIdProjects');
 
             $count_total_project = Project::all()->count();
@@ -242,8 +231,9 @@ class TicketController extends Controller
             $count_open_ticket = Ticket::where('status_id', '1')->where('project_id', $idProject)->count();
             $count_closed_ticket = Ticket::where('status_id', '2')->where('project_id', $idProject)->count();
             $Tickets = Ticket::where('status_id', '2')->where('project_id', $idProject)->get();
+            $Projects = Project::find($idProject);
         } else {
-             // get id project
+            // get id project
             $idProject = session('findIdProjects');
 
             $count_total_project = Project::all()->count();
@@ -251,7 +241,8 @@ class TicketController extends Controller
             $count_open_ticket = Ticket::where('status_id', '1')->where('assigned_to_user', Auth::user()->id)->count();
             $count_closed_ticket = Ticket::where('status_id', '2')->where('assigned_to_user', Auth::user()->id)->count();
             $Tickets = Ticket::where('assigned_to_user', Auth::user()->id)->where('status_id', '2')->get();
+            $Projects = Project::find($idProject);
         }
-        return view('admin.project.show', compact('Tickets', 'idProject', 'count_open_ticket', 'count_closed_ticket', 'count_total_project', 'count_total_tiket'));
+        return view('admin.project.show', compact('Tickets', 'Projects', 'idProject', 'count_open_ticket', 'count_closed_ticket', 'count_total_project', 'count_total_tiket'));
     }
 }

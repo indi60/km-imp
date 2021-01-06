@@ -90,7 +90,7 @@
 <!-- container-fluid -->
 
 @section('js')
-    <script src="https://cdn.ckeditor.com/4.12.1/standard/ckeditor.js"></script>
+    <script src="https://cdn.ckeditor.com/4.12.1/full/ckeditor.js"></script>
     <script type="text/javascript">
         CKEDITOR.replace('content-article', {
             filebrowserUploadUrl: "{{ route('upload.upload', ['_token' => csrf_token() ])}}",

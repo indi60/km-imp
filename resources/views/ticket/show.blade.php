@@ -72,21 +72,19 @@
                                                         </div>
                                                     @endforeach
                                                     <div>
-                                                        <h5>
-                                                            <a href="mailto:{{ $Commentar->author_email }}"
-                                                                style="text-decoration: none"
-                                                                class="ml-3">{{ $Commentar->author_name }}
-                                                            </a>
-                                                        </h5>
                                                         <p class="ml-3">
-                                                            {{ $Commentar->created_at->format('D, d M Y H:i') }}
-                                                        </p>
-                                                        <p class="ml-3">
-                                                            {!! $Commentar->comment_text !!}
-                                                            <a class="text-primary ml-3" style="cursor:pointer"
-                                                                onclick="showReplyForm('{{ $Commentar->id }}','{{ $Commentar->author_name }}')">
-                                                                Reply
-                                                            </a>
+                                                            <strong class="text-primary"><a
+                                                                    href="mailto:{{ $Commentar->author_email }}"
+                                                                    class="text-decoration-none">{{ $Commentar->author_name }}</a></strong><span
+                                                                class="meta">
+                                                                {{ $Commentar->created_at->format('D, d M Y H:i') }}</span>
+                                                            <a class="text-primary"
+                                                                onclick="showReplyForm('{{ $Commentar->id }}','{{ $Commentar->author_name }}')"
+                                                                style="cursor:pointer"> - Reply </a>
+                                                            <br>
+                                                            <div class="ml-3">
+                                                                {!! $Commentar->comment_text !!}
+                                                            </div>
                                                         </p>
                                                     </div>
                                                 </div>
@@ -150,22 +148,27 @@
 
                                                         <div class="row flex-row d-flex">
                                                             <form action="/comment-reply" method="post"
-                                                                id="reply-form-{{ $Commentar->id }}" style="margin-left: 30px;">
+                                                                id="reply-form-{{ $Commentar->id }}"
+                                                                style="margin-left: 30px;">
                                                                 @csrf
 
-                                                                <input type="hidden" name="user_id" id="user_id" value="{{ Auth::user()->id }}">
-                                                                <input type="hidden" name="author_name" id="author_name" value="{{ Auth::user()->name }}">
-                                                                <input type="hidden" name="author_email" id="author_email" value="{{ Auth::user()->email }}">
+                                                                <input type="hidden" name="user_id" id="user_id"
+                                                                    value="{{ Auth::user()->id }}">
+                                                                <input type="hidden" name="author_name" id="author_name"
+                                                                    value="{{ Auth::user()->name }}">
+                                                                <input type="hidden" name="author_email"
+                                                                    id="author_email"
+                                                                    value="{{ Auth::user()->email }}">
 
-                                                                <input type="hidden" name="comment_id" id="comment_id" value="{{ $Commentar->id }}">
+                                                                <input type="hidden" name="comment_id" id="comment_id"
+                                                                    value="{{ $Commentar->id }}">
 
                                                                 <div class="form-group">
                                                                     <label for="">Reply a comment</label>
                                                                     <textarea
                                                                         id="reply-form-{{ $Commentar->id }}-text"
                                                                         name="comment_reply_text" rows="4"
-                                                                        class="form-control"
-                                                                        style="width: 800px"
+                                                                        class="form-control" style="width: 800px"
                                                                         onfocus="this.placeholder = ''"
                                                                         onblur="this.placeholder = 'Reply message'">
                                                                     </textarea>
@@ -191,34 +194,39 @@
 
                         <input type="hidden" name="user_id" id="user_id" value="{{ Auth::user()->id }}">
                         <input type="hidden" name="author_name" id="author_name" value="{{ Auth::user()->name }}">
-                        <input type="hidden" name="author_email" id="author_email" value="{{ Auth::user()->email }}">
+                        <input type="hidden" name="author_email" id="author_email"
+                            value="{{ Auth::user()->email }}">
 
                         <input type="hidden" name="ticket_id" id="ticket_id" value="{{ $Tickets->id }}">
 
                         <div class="form-group">
                             <label for="">Leave a comment</label>
-                            <textarea name="comment_text" rows="4" class="form-control"
-                                placeholder="Type your message" id="reply-form">
+                            <textarea name="comment_text" rows="4" class="form-control" placeholder="Type your message"
+                                id="reply-form">
                             </textarea>
                         </div>
-                        <button class="btn btn-primary btn-sm">Comment</button>
+                        <div class="float-right">
+                            <a class="btn btn-secondary btn-sm"><i class="fas fa-check-circle"></i><span class="ml-2">Close issue</span></a>
+                            <button class="btn btn-primary btn-sm" id="comment-btn">Comment</button>
+                        </div>
                     </form>
                 </div>
             </div>
         </div>
     </div>
 
-    <a href="{{ url('/project/'.$idProject.'/ticket')}}" class="text-danger float-right">
+    <a href="{{ url('/project/'.$idProject.'/ticket') }}"
+        class="text-danger float-right">
         <i class="fas fa-arrow-left"><span class="ml-2">Back</span></i>
     </a>
 </div>
 <!-- /.container-fluid -->
 
 @section('js')
-<script src="https://cdn.ckeditor.com/4.12.1/standard/ckeditor.js"></script>
+<script src="https://cdn.ckeditor.com/4.12.1/full/ckeditor.js"></script>
 <script>
     CKEDITOR.replace('reply-form', {
-        filebrowserUploadUrl: "{{ route('upload.upload', ['_token' => csrf_token() ])}}",
+        filebrowserUploadUrl: "{{ route('upload.upload', ['_token' => csrf_token() ]) }}",
         filebrowserUploadMethod: 'form',
     });
 
@@ -230,13 +238,14 @@
             x.style.display = "block";
             input.innerText = `@${user} `;
             CKEDITOR.replace(`reply-form-${commentId}-text`, {
-                filebrowserUploadUrl: "{{ route('upload.upload', ['_token' => csrf_token() ])}}",
+                filebrowserUploadUrl: "{{ route('upload.upload', ['_token' => csrf_token() ]) }}",
                 filebrowserUploadMethod: 'form',
             });
         } else {
             x.style.display = "none";
         }
     }
+
 </script>
 @endsection
 

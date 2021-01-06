@@ -19,11 +19,11 @@ class Project extends Model
 
     public function Ticket()
     {
-        return $this->belongsTo('App\Ticket');
+        return $this->hasMany('App\Ticket',  'project_id');
     }
 
     public function ProjectAssigned()
     {
-        return $this->hasMany('App\ProjectAssigned');
+        return $this->hasMany('App\ProjectAssigned', 'project_id');
     }
 }

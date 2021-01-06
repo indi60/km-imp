@@ -26,7 +26,7 @@ class LaporanController extends Controller
         $Statuses = Status::all();
         $Projects = Project::all();
         $Tickets = Ticket::all();
-        return view('admin.laporan', compact('Tickets', 'Users', 'Statuses','Projects', 'count_total_project', 'count_total_tiket'));
+        return view('admin.laporan.index', compact('Tickets', 'Users', 'Statuses','Projects', 'count_total_project', 'count_total_tiket'));
     }
 
     /**

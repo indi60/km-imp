@@ -1,6 +1,6 @@
 @extends('layouts/main')
 
-@section('title', 'Admin | Tabel Member')
+@section('title', 'Admin | Data Member')
 
 @section('container')
 <!-- Begin Page Content -->

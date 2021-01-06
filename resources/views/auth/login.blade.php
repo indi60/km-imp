@@ -11,9 +11,10 @@
 
     <!-- Main css -->
     <link rel="stylesheet" href="{{asset('assets/css/auth.css')}}">
+    <link rel="stylesheet" href="{{ asset('assets/css/bootstrap.min.css') }}">
 
     <!-- Favicon  -->
-    <link rel="icon" href="{{asset('images/logo/koma-logo.svg')}}">
+    <link rel="icon" href="{{asset('assets/images/logo/koma-logo.svg')}}">
 </head>
 <body>
 
@@ -23,7 +24,7 @@
             <div class="container">
                 <div class="signin-content">
                     <div class="signin-image">
-                        <figure><img src="{{asset('images/logo/koma-auth-illustration.svg')}}" alt="sing up image"></figure>
+                        <figure><img src="{{asset('assets/images/logo/koma-auth-illustration.svg')}}" alt="sing up image"></figure>
                         <a href="{{ route('register') }}" class="signup-image-link">Create an account</a>
                     </div>
 
@@ -48,12 +49,6 @@
                                         <strong>{{ $message }}</strong>
                                     </span>
                                 @enderror
-                            </div>
-                            <div class="form-group">
-                                <input class="agree-term" type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
-                                <label class="label-agree-term" for="remember">
-                                    <span><span></span></span>Remember me
-                                </label>
                             </div>
                             <div>
                                 @if (Route::has('password.request'))

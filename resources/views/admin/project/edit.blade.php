@@ -60,7 +60,12 @@
                             multiple data-live-search="true" id="assigned_to_user" name="assigned_to_user[]"
                             value="{{ old('assigned_to_user') }}">
                             @foreach($Users as $User)
-                                <option value="{{ $User->id }}">
+                                <option value="{{ $User->id }}"
+                                    @foreach($Projects->ProjectAssigned as $item)
+                                        @if ($User->id === $item->AssignedTo->id)
+                                            selected
+                                        @endif
+                                    @endforeach>
                                     {{ $User->name }}
                                 </option>
                             @endforeach

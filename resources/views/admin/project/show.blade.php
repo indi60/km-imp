@@ -1,21 +1,28 @@
 @extends('layouts/main')
 
 @if (auth()->user()->role_id == "1")
-    @section('title', 'Admin | Tabel Ticket')
+    @section('title', 'Admin | Data Issue')
 @elseif (auth()->user()->role_id == "2")
-    @section('title', 'Member | Tabel Ticket')
+    @section('title', 'Member | Data Issue')
 @endif
 
 @section('container')
 <!-- Begin Page Content -->
 <div class="container-fluid">
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-        <h1 class="h3 mb-0 text-gray-800">Data Ticket</h1>
+        <h4 class="mb-0 font-weight-bold" style="color: black">User Assigned :</h4><br>
         <form class="form-inline">
-            <a href="/project/ticket/create" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
-                <i class="fas fa-plus fa-sm text-white-50"></i>Tambah Tiket
+            <a href="/project/ticket/create" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm mr-2">
+                    <i class="fas fa-plus fa-md text-white-50"></i><span class="ml-2">Tambah Issue</span>
             </a>
         </form>
+    </div>
+    <div class="d-sm-flex align-items-center mb-4">
+        @foreach($Projects->ProjectAssigned as $item)
+            <a type="button" data-toggle="tooltip" data-placement="bottom" title="{{$item->AssignedTo->name}}">
+                <img src="{{ asset('storage/photos/upload/avatar/'.$item->AssignedTo->avatar) }}" alt="avatar" width="50px" class="rounded-circle ml-3">
+            </a>
+        @endforeach
     </div>
 
     <!-- Flash Data -->
@@ -37,16 +44,16 @@
     <!-- DataTales Example -->
     <div class="card shadow mb-4">
         <div class="card-header py-3">
-            <form action="/filter_status_open"
+            <form action="/project/{{$idProject}}/filter_status_open"
                 method="GET" class="d-inline">
                 <button type="submit" class="btn btn-small text-success">
-                    <img src="{{ (asset('images/logo/issue-opened.svg')) }}" alt="" width="25%"><span class="ml-2"><b>{{$count_open_ticket}}</b></span><span class="ml-2"><b>Open</b></span>
+                    <img src="{{ (asset('assets/images/logo/issue-opened.svg')) }}" alt="" width="25%"><span class="ml-2"><b>{{$count_open_ticket}}</b></span><span class="ml-2"><b>Open</b></span>
                 </button>
             </form>
-            <form action="/filter_status_closed"
+            <form action="/project/{{$idProject}}/filter_status_closed"
                 method="GET" class="d-inline">
                 <button type="submit" class="btn btn-small text-danger">
-                    <img src="{{ (asset('images/logo/issue-closed.svg')) }}" alt="" width="25%"><span class="ml-2"><b>{{$count_closed_ticket}}</b></span><span class="ml-2"><b>Closed</b></span>
+                    <img src="{{ (asset('assets/images/logo/issue-closed.svg')) }}" alt="" width="25%"><span class="ml-2"><b>{{$count_closed_ticket}}</b></span><span class="ml-2"><b>Closed</b></span>
                 </button>
             </form>
         </div>
@@ -56,7 +63,7 @@
                 <table class="table table-bordered table-hover" id="dataTable" width="100%" cellspacing="0">
                     <thead class="thead-dark">
                         <tr>
-                            <th scope="col" class="text-center">Judul Tiket</th>
+                            <th scope="col" class="text-center">Judul Issue</th>
                             @if (auth()->user()->role_id == "1")
                             <th scope="col" class="text-center">Assigned To</th>
                             @endif
@@ -75,7 +82,13 @@
                                 @endforeach
                                 <br>
                                 <p style="font-size: 14px">
-                                    #{{ $Ticket->id }} opened {{$Ticket->created_at->diffForHumans()}} by {{ $Ticket->author_name }}
+                                    #{{ $Ticket->id }}
+                                    @if ($Ticket->status_id === 1)
+                                        opened
+                                    @else
+                                        was closed
+                                    @endif
+                                    {{$Ticket->created_at->diffForHumans()}} by {{ $Ticket->author_name }}
                                 </p>
                             </td>
                             @if (auth()->user()->role_id == "1")
@@ -122,4 +135,12 @@
     </a>
 </div>
 <!-- /.container-fluid -->
+@endsection
+
+@section('js')
+<script>
+$(function () {
+    $('[data-toggle="tooltip"]').tooltip()
+})
+</script>
 @endsection

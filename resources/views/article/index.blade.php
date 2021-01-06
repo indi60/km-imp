@@ -1,9 +1,9 @@
 @extends('layouts/main')
 
 @if (auth()->user()->role_id == "1")
-    @section('title', 'Admin | Tambah Data Artikel')
+    @section('title', 'Admin | Data Artikel')
 @elseif (auth()->user()->role_id == "2")
-    @section('title', 'Member | Tambah Data Artikel')
+    @section('title', 'Member | Data Artikel')
 @endif
 
 @section('container')
@@ -11,7 +11,7 @@
 <div class="container-fluid">
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
         <h1 class="h3 mb-0" style="font-size: 32px; color: black"><b>Artikel</b></h1>
-        @if(auth()->user()->role_id == "1")
+        @if(auth()->user()->role_id == 1 or 2)
         <div class="row">
             <form class="form-inline">
                 <a href="/article/create" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm mr-2">
@@ -65,6 +65,15 @@
                         <div class="card shadow mb-4">
                             <div class="card-body">
                                 <h5 class="card-title text-black-50">{{ $Article->title }}</h5>
+                                <p class="card-text text-black-50 mb-3">
+                                    @foreach($Article->StatusArticle as $item)
+                                        @if ($item->id == 1)
+                                            <span class="badge badge-pill badge-success">{{ $item->name }}</span>
+                                        @else
+                                            <span class="badge badge-pill badge-secondary">{{ $item->name }}</span>
+                                        @endif
+                                    @endforeach
+                                </p>
                                 <p class="card-text text-black-50 mb-3">
                                     @foreach($Article->Job as $item)
                                         {{ $item->name }}

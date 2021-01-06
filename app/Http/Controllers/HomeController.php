@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Project;
 use App\Ticket;
+use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
 {
@@ -25,10 +27,15 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $count_total_project = Project::all()->count();
-        $count_total_tiket = Ticket::all()->count();
-        $count_open_tiket = Ticket::where('status_id', '1')->count();
-        $count_close_tiket = Ticket::where('status_id', '2')->count();
-        return view('home', compact('count_total_tiket', 'count_total_project', 'count_open_tiket', 'count_close_tiket'));
+        if (Auth::user()->role_id == 1 or 2) {
+            $count_total_project = Project::all()->count();
+            $count_total_tiket = Ticket::all()->count();
+            $count_total_admin = User::where('role_id', '1')->count();
+            $count_total_member = User::where('role_id', '2')->count();
+            $count_total_guest = User::where('role_id', '3')->count();
+            return view('home', compact('count_total_project', 'count_total_tiket', 'count_total_admin', 'count_total_member', 'count_total_guest'));
+        } else {
+            return view('landing_page.welcome');
+        }
     }
 }

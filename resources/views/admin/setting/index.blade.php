@@ -1,6 +1,6 @@
 @extends('layouts/main')
 
-@section('title', 'Admin | Tabel Setting')
+@section('title', 'Admin | Data Setting')
 
 @section('container')
 <!-- Begin Page Content -->
@@ -28,8 +28,9 @@
 
     <!-- DataTales Example -->
     <div class="card shadow mb-4">
-        <div class="card-header py-3">
-            <form class="form-inline">
+        <div class="card-header">
+            <form class="form-inline justify-content-between">
+                <h5>Data Job</h5>
                 <a href="/job/create" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm mr-2">
                     <i class="fas fa-plus fa-md text-white-50"></i><span class="ml-2">Tambah Job</span>
                 </a>
@@ -72,8 +73,9 @@
     </div>
 
     <div class="card shadow mb-4">
-        <div class="card-header py-3">
-            <form class="form-inline">
+        <div class="card-header">
+            <form class="form-inline justify-content-between">
+                <h5>Data Role</h5>
                 <a href="/role/create" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm mr-2">
                     <i class="fas fa-plus fa-md text-white-50"></i><span class="ml-2">Tambah Role</span>
                 </a>
@@ -116,8 +118,9 @@
     </div>
 
     <div class="card shadow mb-4">
-        <div class="card-header py-3">
-            <form class="form-inline">
+        <div class="card-header">
+            <form class="form-inline justify-content-between">
+                <h5>Data Priority</h5>
                 <a href="/priority/create" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm mr-2">
                     <i class="fas fa-plus fa-md text-white-50"></i><span class="ml-2">Tambah Priority</span>
                 </a>
@@ -162,8 +165,9 @@
     </div>
 
     <div class="card shadow mb-4">
-        <div class="card-header py-3">
-            <form class="form-inline">
+        <div class="card-header">
+            <form class="form-inline justify-content-between">
+                <h5>Data Status</h5>
                 <a href="/status/create" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm mr-2">
                     <i class="fas fa-plus fa-md text-white-50"></i><span class="ml-2">Tambah Status</span>
                 </a>
@@ -203,6 +207,29 @@
                         @endforeach
                     </tbody>
                 </table>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-12">
+            <div class="card shadow mb-4">
+                <div class="card-header">
+                    <h5>Deskripsi</h5>
+                </div>
+                @foreach ($Descriptions as $Description)
+                    <div class="card-body">
+                        <p>{{ $Description->desc }}</p>
+                        <a href="/description/{{ $Description->id }}/edit" class="btn btn-small text-success float-right">
+                            <i class="fa fa-edit"></i><span class="ml-2">Edit</span>
+                        </a>
+                    </div>
+                    <div class="card-footer">
+                        <small class="text-muted">Last updated
+                            {{ $Description->updated_at->diffForHumans() }}
+                        </small>
+                    </div>
+                @endforeach
             </div>
         </div>
     </div>
