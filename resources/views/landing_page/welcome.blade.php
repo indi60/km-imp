@@ -62,7 +62,7 @@
                             @if(Route::has('login'))
                                 @auth
                                     <li class="nav-item">
-                                        <a class="nav-link page-scroll" href="{{ url('/home') }}">Dashboard</a>
+                                        <a class="nav-link page-scroll" href="{{ url('/reporter') }}">Dashboard</a>
                                     </li>
 
                                     <li class="nav-item">
@@ -99,9 +99,14 @@
                                     KOMA Helpdesk is a management app that was build for the purpose of "easily manage everything" with an easy to navigate interface, feather-weight load time and responsive interactions.
                                 </p>
                             </div>
+                            @if(Route::has('login'))
+                                @auth
+                            @else
                             <div class="header-button">
                                 <a class="btn btn-common" href="{{ route('login') }}">Sign In <i class="fas fa-arrow-right"></i></a>
                             </div>
+                            @endauth
+                            @endif
                         </div>
                     </div>
 
@@ -373,7 +378,7 @@
                     <div class="col-lg-4">
                         <p class="p-small">Copyright ©
                             <a href="https://impstudio.id/">
-                                IMPStudio 2020
+                                IMPStudio 2021
                             </a>
                         </p>
                     </div>

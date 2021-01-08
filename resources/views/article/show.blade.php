@@ -4,6 +4,8 @@
     @section('title', 'Admin | Detail Artikel')
 @elseif(auth()->user()->role_id == "2")
     @section('title', 'Member | Detail Artikel')
+@elseif(auth()->user()->role_id == "3")
+    @section('title', 'Reporter | Detail Artikel')
 @endif
 
 @section('container')
