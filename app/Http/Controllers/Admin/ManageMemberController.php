@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\User;                   
+use App\User;
 use App\Job;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -22,7 +22,8 @@ class ManageMemberController extends Controller
         $count_total_project = Project::all()->count();
         $count_total_tiket = Ticket::all()->count();
         $Members = User::where('role_id', '2')->get();
-        return view('admin.manage_member.index', compact('Members', 'count_total_project', 'count_total_tiket'));
+        $Guests = User::where('role_id', '3')->get();
+        return view('admin.manage_member.index', compact('Members', 'Guests', 'count_total_project', 'count_total_tiket'));
     }
 
     /**
@@ -137,5 +138,14 @@ class ManageMemberController extends Controller
         $Members = User::find($id);
         $Members->delete();
         return redirect('/manage-member')->with('statusDelete', 'Data Berhasil Dihapus!');
+    }
+
+    public function approve($id)
+    {
+        $Guests = User::find($id);
+        $name = $Guests->name;
+        $Guests->role_id = 2;
+        $Guests->update();
+        return redirect('/manage-member')->with('status', 'Data ' . $name . ' Berhasil Diapprove!');
     }
 }

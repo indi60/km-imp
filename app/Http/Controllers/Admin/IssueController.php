@@ -1,14 +1,16 @@
 <?php
 
-namespace App\Http\Controllers\Admin\Setting;
+namespace App\Http\Controllers\Admin;
 
-use App\Project;
-use App\Ticket;
-use App\Description;
 use App\Http\Controllers\Controller;
+use App\Priority;
+use App\Project;
+use App\Status;
+use App\Ticket;
+use App\User;
 use Illuminate\Http\Request;
 
-class DescriptionController extends Controller
+class IssueController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -17,7 +19,10 @@ class DescriptionController extends Controller
      */
     public function index()
     {
-        //
+        $count_total_project = Project::all()->count();
+        $count_total_tiket = Ticket::all()->count();
+        $Tickets = Ticket::where('role_id', '3')->get();
+        return view('admin.issue.index', compact('Tickets','count_total_project', 'count_total_tiket'));
     }
 
     /**
@@ -62,8 +67,12 @@ class DescriptionController extends Controller
     {
         $count_total_project = Project::all()->count();
         $count_total_tiket = Ticket::all()->count();
-        $Descriptions = Description::find($id);
-        return view('admin.description.edit', compact('Descriptions', 'count_total_project', 'count_total_tiket'));
+        $Tickets = Ticket::find($id);
+        $Projects = Project::all();
+        $Users = User::all();
+        $Statuses = Status::all();
+        $Priorities = Priority::all();
+        return view('admin.issue.edit', compact('Tickets', 'Projects', 'Users', 'Statuses', 'Priorities', 'count_total_project', 'count_total_tiket'));
     }
 
     /**
@@ -75,14 +84,22 @@ class DescriptionController extends Controller
      */
     public function update(Request $request, $id)
     {
+        // get id project
+        $idProject = session('findIdProjects');
+
         $request->validate([
-            'desc' => 'required',
+            'project_id' => 'required',
+            'assigned_to_user' => 'required',
+            'priority_id' => 'required',
         ]);
 
-        $Descriptions = Description::find($id);
-        $Descriptions->desc = $request->desc;
-        $Descriptions->update();
-        return redirect('/setting')->with('status', 'Berhasil Memperbarui Deskripsi!');
+        $Tickets = Ticket::find($id);
+        $Tickets->role_id = 2;
+        $Tickets->project_id = $request->project_id;
+        $Tickets->assigned_to_user = $request->assigned_to_user;
+        $Tickets->priority_id = $request->priority_id;
+        $Tickets->update();
+        return redirect('/issue')->with('status', 'Data ' . $request->title . ' Berhasil Diubah!');
     }
 
     /**

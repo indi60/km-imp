@@ -53,29 +53,52 @@ class TicketController extends Controller
         // get id project
         $idProject = session('findIdProjects');
 
-        $request->validate([
-            'user_id' => 'required',
-            'project_id' => 'required',
-            'title' => 'required',
-            'content' => 'required',
-            'author_name' => 'required',
-            'author_email' => 'required',
-            'assigned_to_user' => 'required',
-            'status_id' => 'required',
-            'priority_id' => 'required',
-        ]);
-        Ticket::create([
-            'user_id' => $request->user_id,
-            'project_id' => $request->project_id,
-            'title' => $request->title,
-            'content' => $request->content,
-            'author_name' => $request->author_name,
-            'author_email' => $request->author_email,
-            'assigned_to_user' => $request->assigned_to_user,
-            'status_id' => $request->status_id,
-            'priority_id' => $request->priority_id,
-        ]);
-        return redirect('/project/' . $idProject . '/ticket')->with('status', 'Data ' . $request->title . ' Berhasil Ditambahkan!');
+        if (Auth::user()->id == 3) {
+            $request->validate([
+                'user_id' => 'required',
+                'project_id' => 'required',
+                'title' => 'required',
+                'content' => 'required',
+                'author_name' => 'required',
+                'author_email' => 'required',
+                'status_id' => 'required',
+            ]);
+            Ticket::create([
+                'user_id' => $request->user_id,
+                'role_id' => $request->role_id,
+                'project_id' => $request->project_id,
+                'title' => $request->title,
+                'content' => $request->content,
+                'author_name' => $request->author_name,
+                'author_email' => $request->author_email,
+                'status_id' => $request->status_id,
+            ]);
+            return redirect('/');
+        } else {
+            $request->validate([
+                'user_id' => 'required',
+                'project_id' => 'required',
+                'title' => 'required',
+                'content' => 'required',
+                'author_name' => 'required',
+                'author_email' => 'required',
+                'assigned_to_user' => 'required',
+                'status_id' => 'required',
+                'priority_id' => 'required',
+            ]);
+            Ticket::create([
+                'user_id' => $request->user_id,
+                'project_id' => $request->project_id,
+                'title' => $request->title,
+                'content' => $request->content,
+                'author_name' => $request->author_name,
+                'author_email' => $request->author_email,
+                'assigned_to_user' => $request->assigned_to_user,
+                'status_id' => $request->status_id,
+                'priority_id' => $request->priority_id,
+            ]);
+            return redirect('/project/' . $idProject . '/ticket')->with('status', 'Data ' . $request->title . ' Berhasil Ditambahkan!');
+        }
     }
 
     /**
@@ -107,8 +130,6 @@ class TicketController extends Controller
         // get id project
         $idProject = session('findIdProjects');
 
-        $count_total_project = Project::all()->count();
-        $count_total_tiket = Ticket::all()->count();
         $count_total_project = Project::all()->count();
         $count_total_tiket = Ticket::all()->count();
         $Tickets = Ticket::find($id);

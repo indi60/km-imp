@@ -17,6 +17,7 @@ class CreateProjectsTable extends Migration
             $table->id();
             $table->string('name');
             $table->unsignedBigInteger('category_id');
+            $table->unsignedBigInteger('status_article_id');
             $table->timestamps();
         });
     }

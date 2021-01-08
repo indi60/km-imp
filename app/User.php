@@ -62,7 +62,12 @@ class User extends Authenticatable
 
     public function ProjectAssigned()
     {
-        return $this->belongsTo('App\ProjectAssigned');
+        return $this->hasMany('App\ProjectAssigned', 'assigned_to_user');
+    }
+
+    public function Project()
+    {
+        return $this->hasMany('App\Project', 'assigned_to_user');
     }
 
     public function Comment()

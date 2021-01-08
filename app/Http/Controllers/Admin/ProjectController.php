@@ -8,6 +8,7 @@ use App\CategoryProject;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\ProjectAssigned;
+use App\StatusArticle;
 use App\User;
 use Illuminate\Support\Facades\Auth;
 
@@ -20,15 +21,9 @@ class ProjectController extends Controller
      */
     public function index()
     {
-        if (Auth::user()->role_id == "1") {
-            $count_total_project = Project::all()->count();
-            $count_total_tiket = Ticket::all()->count();
-            $Projects = Project::all();
-        } else {
-            $count_total_project = Project::all()->count();
-            $count_total_tiket = Ticket::all()->count();
-            $Projects = Project::all();
-        }
+        $count_total_project = Project::all()->count();
+        $count_total_tiket = Ticket::all()->count();
+        $Projects = Project::all();
         return view('admin.project.index', compact('Projects', 'count_total_project', 'count_total_tiket'));
     }
 
@@ -43,7 +38,8 @@ class ProjectController extends Controller
         $count_total_tiket = Ticket::all()->count();
         $CategoryProjects = CategoryProject::all();
         $Users = User::all();
-        return view('admin.project.create', compact('CategoryProjects', 'Users', 'count_total_project', 'count_total_tiket'));
+        $StatusArticles = StatusArticle::all();
+        return view('admin.project.create', compact('CategoryProjects', 'Users', 'StatusArticles','count_total_project', 'count_total_tiket'));
     }
 
     /**
@@ -58,11 +54,13 @@ class ProjectController extends Controller
             'name' => 'required',
             'category_id' => 'required',
             'assigned_to_user' => 'required',
+            'status_article_id' => 'required',
         ]);
 
         $Project = new Project;
         $Project->name = $request->name;
         $Project->category_id = $request->category_id;
+        $Project->status_article_id = $request->status_article_id;
         $Project->save();
 
         $Assigned = $request->assigned_to_user;
@@ -114,7 +112,8 @@ class ProjectController extends Controller
         $Projects = Project::find($id);
         $CategoryProjects = CategoryProject::all();
         $Users = User::all();
-        return view('admin.project.edit', compact('Projects', 'CategoryProjects', 'Users', 'count_total_project', 'count_total_tiket'));
+        $StatusArticles = StatusArticle::all();
+        return view('admin.project.edit', compact('Projects', 'CategoryProjects', 'Users', 'StatusArticles', 'count_total_project', 'count_total_tiket'));
     }
 
     /**
@@ -130,11 +129,14 @@ class ProjectController extends Controller
             'name' => 'required',
             'category_id' => 'required',
             'assigned_to_user' => 'required',
+            'status_article_id' => 'required',
         ]);
 
         $Projects = Project::find($id);
         $Projects->name = $request->name;
         $Projects->category_id = $request->category_id;
+        $Projects->status_article_id = $request->status_article_id;
+        $Projects->update();
 
         $CurentProject = ProjectAssigned::where('project_id', $id)->get();
         foreach ($CurentProject as $item) {

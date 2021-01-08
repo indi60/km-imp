@@ -51,6 +51,24 @@
                 </div>
 
                 <div class="form-group">
+                    <label for="status_article_id">Status</label>
+                    <div class="input-group mb-3">
+                        <select class="custom-select form-control @error('status_article_id') is-invalid @enderror" id="status_article_id"
+                            placeholder="Masukan Job" name="status_article_id" value="{{ old('status_article_id') }}">
+                            <option value="0" selected>Pilih Status</option>
+                            @foreach($StatusArticles as $StatusArticle)
+                                <option value="{{ $StatusArticle->id }}">
+                                    {{ $StatusArticle->name }}
+                                </option>
+                            @endforeach
+                        </select>
+                        @error('status_article_id')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+                    </div>
+                </div>
+
+                <div class="form-group">
                     <label for="assigned_to_user">Assigned To</label>
                     <div class="input-group mb-3">
                         <select class="custom-select selectpicker form-control @error('assigned_to_user') is-invalid @enderror"

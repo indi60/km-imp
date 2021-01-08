@@ -1,6 +1,6 @@
 @extends('layouts/main')
 
-@section('title', 'Admin | Data Member')
+@section('title', 'Admin | Data User')
 
 @section('container')
 <!-- Begin Page Content -->
@@ -57,9 +57,13 @@
                             <td class="text-center">{{ $Member->name }}</td>
                             <td class="text-center">{{ $Member->jenis_kelamin }}</td>
                             <td class="text-center">
-                                @foreach ($Member->Job as $item)
-                                    {{ $item->name }}
-                                @endforeach
+                                @if ($Member->job_id == null)
+                                    <p>Customer</p>
+                                @else
+                                    @foreach ($Member->Job as $item)
+                                        {{ $item->name }}
+                                    @endforeach
+                                @endif
                             </td>
                             <td class="text-center">{{ $Member->alamat }}</td>
                             <td class="text-center">{{ $Member->no_hp }}</td>
@@ -90,6 +94,61 @@
             </div>
         </div>
     </div>
+
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h3 mb-0" style="font-size: 32px; color: black"><b>Data Guest User</b></h1>
+    </div>
+
+    <!-- DataTales Example -->
+    <div class="card shadow mb-4">
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered table-hover" id="dataTable2" width="100%" cellspacing="0">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th scope="col" class="text-center">No.</th>
+                            <th scope="col" class="text-center">Nama Lengkap</th>
+                            <th scope="col" class="text-center">Jenis Kelamin</th>
+                            <th scope="col" class="text-center">Alamat</th>
+                            <th scope="col" class="text-center">No HP</th>
+                            <th scope="col" class="text-center">Email</th>
+                            <th scope="col" class="text-center">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach($Guests as $Guest)
+                        <tr>
+                            <th scope="row" class="text-center"><strong>{{ $loop->iteration }}</strong></th>
+                            <td class="text-center">{{ $Guest->name }}</td>
+                            <td class="text-center">{{ $Guest->jenis_kelamin }}</td>
+                            <td class="text-center">{{ $Guest->alamat }}</td>
+                            <td class="text-center">{{ $Guest->no_hp }}</td>
+                            <td class="text-center">{{ $Guest->email }}</td>
+                            <td class="text-center">
+                                <form action="manage-member/approve/{{ $Guest->id }}" method="POST" class="d-inline">
+                                    @method('put')
+                                    @csrf
+                                    <button type="submit" class="btn btn-small text-success">
+                                        <i class=" fa fa-check-circle"></i><span class="ml-2">Approve</span>
+                                    </button>
+                                </form>
+                            </td>
+                        </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
 </div>
 <!-- /.container-fluid -->
+@endsection
+
+@section('js')
+<script>
+    $(document).ready(function () {
+        $('#dataTable2').DataTable();
+    });
+
+</script>
 @endsection

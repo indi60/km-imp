@@ -196,7 +196,7 @@
 
     <!-- Go To Top Link -->
     <a href="#" class="back-to-top">
-        <i class="lni-chevron-up"></i>
+        <i class="fas fa-chevron-up"></i>
     </a>
 
     <!-- Preloader -->

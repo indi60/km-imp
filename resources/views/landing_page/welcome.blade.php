@@ -61,26 +61,29 @@
                             </li>
                             @if(Route::has('login'))
                                 @auth
-                                    <li class="nav-item">
-                                        <a class="nav-link page-scroll" href="{{ url('/home') }}">Dashboard</a>
-                                    </li>
+                                    @if (auth()->user()->role_id == 1 OR auth()->user()->role_id == 2)
+                                        <li class="nav-item">
+                                            <a class="nav-link page-scroll" href="{{ url('/home') }}">Dashboard</a>
+                                        </li>
+                                    @endif
+                                        @if (auth()->user()->role_id == 3)
+                                            <li class="nav-item">
+                                                <a class="btn btn-singin" style="background: #dc3545; border-radius: 15px;" href="{{ route('logout') }}" onclick="event.preventDefault();
+                                                    document.getElementById('logout-form').submit();">Logout <i class="fas fa-sign-out-alt"></i>
+                                                </a>
 
-                                    <li class="nav-item">
-                                        <a class="nav-link page-scroll" href="{{ route('logout') }}" onclick="event.preventDefault();
-                                            document.getElementById('logout-form').submit();">Leave
-                                        </a>
-
-                                        <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                                            @csrf
-                                        </form>
-                                    </li>
+                                                <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                                                    @csrf
+                                                </form>
+                                            </li>
+                                    @endif
                                 @else
                                     <li class="nav-item">
-                                        <a class="btn btn-singin" href="{{ route('login') }}">Sign In <i class="fas fa-arrow-right"></i></a>
+                                        <a class="btn btn-singin" style="border-radius: 15px" href="{{ route('login') }}">Sign In <i class="fas fa-arrow-right"></i></a>
                                     </li>
                                     @if(Route::has('register'))
                                         <li class="nav-item">
-                                            <a class="btn btn-singin" href="{{ route('register') }}">Sign Up</a>
+                                            <a class="btn btn-singup" style="border-radius: 15px" href="{{ route('register') }}">Sign Up</a>
                                         </li>
                                     @endif
                                 @endauth
@@ -91,6 +94,13 @@
             </nav>
             <div class="container">
                 <div class="row space-100">
+                    <div class="col-lg-6 col-md-12 col-xs-12 mt-xl-5">
+                        <div class="intro-img">
+                            <img src="{{ asset('assets/images/landing/landing-illustration.svg') }}"
+                                alt="">
+                        </div>
+                    </div>
+
                     <div class="col-lg-6 col-md-12 col-xs-12">
                         <div class="contents">
                             <h2 class="ml-sm-3">add, report, and manage everything easily.</h2>
@@ -100,15 +110,8 @@
                                 </p>
                             </div>
                             <div class="header-button">
-                                <a class="btn btn-common" href="{{ route('login') }}">Sign In <i class="fas fa-arrow-right"></i></a>
+                                <a class="btn btn-common" style="border-radius: 15px" href="{{ route('login') }}">Learn More<i class="fas fa-arrow-right ml-3"></i></a>
                             </div>
-                        </div>
-                    </div>
-
-                    <div class="col-lg-6 col-md-12 col-xs-12">
-                        <div class="intro-img">
-                            <img src="{{ asset('assets/images/landing/landing-illustration.svg') }}"
-                                alt="">
                         </div>
                     </div>
                 </div>
@@ -126,15 +129,9 @@
                         <div class="business-item-info">
                             <h3>What is KOMA Helpdesk?</h3>
                             <p class="text-justify">
-                                KOMA Helpdesk or Knowledge & Media Management Helpdesk is an application to build and
-                                strengthen company relationships
-                                which is commonly referred to as customer service, Customer Service is generally able to
-                                help customers reduce issues.
-                                In Knowledge Management the customer or user is able to understand the difference
-                                between knowledge, information and
-                                data. With the user and it can be called the front-end who has a problem with the
-                                program being used, the user is able
-                                to contact the helpdesk and submit a complaint via ticket.
+                                @foreach ($Descriptions as $Description)
+                                    {{$Description->desc}}
+                                @endforeach
                             </p>
                         </div>
                     </div>
@@ -203,7 +200,9 @@
                         </div>
                     </div>
                 @endif
-                <a class="btn btn-common float-right mt-md-5" href="/post">More Article <i class="fas fa-arrow-right"></i></a>
+                <div class="span9 btn-block">
+                    <a class="btn btn-show btn-block mt-md-5" style="border-radius: 15px" href="/post">Show More <i class="fas fa-arrow-right"></i></a>
+                </div>
             </div>
         </section>
         <!-- blog Section End -->
@@ -227,13 +226,14 @@
                 <!-- Start Row -->
                 <div class="row">
                     <!-- Start Col -->
-                    <div class="col-lg-6 col-md-12">
+                    <div class="col-lg-8 col-md-12">
                         <form id="contactForm" action="/project/ticket" method="POST">
                             @csrf
 
                             @if(Route::has('login'))
                                 @auth
                                     <input type="hidden" id="user_id" name="user_id" value="{{ Auth()->user()->id }}">
+                                    <input type="hidden" id="role_id" name="role_id" value="{{ Auth()->user()->role_id }}">
                                     <input type="hidden" id="author_name" name="author_name" value="{{ Auth()->user()->name }}">
                                     <input type="hidden" id="author_email" name="author_email" value="{{ Auth()->user()->email }}">
                                     <input type="hidden" id="status_id" name="status_id" value="1">
@@ -245,6 +245,25 @@
                                                 <input type="text" class="form-control" id="title" name="title"
                                                     placeholder="Judul issue" data-error="Please enter your title">
                                                 <div class="help-block with-errors"></div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <div class="input-group mb-3">
+                                                    <select class="custom-select form-control @error('project_id') is-invalid @enderror"
+                                                        id="project_id" name="project_id"
+                                                        value="{{ old('project_id') }}">
+                                                        <option value="0">Pilih Aplikasi</option>
+                                                        @foreach($Projects as $Project)
+                                                            <option value="{{ $Project->id }}">
+                                                                {{ $Project->name }}
+                                                            </option>
+                                                        @endforeach
+                                                    </select>
+                                                    @error('project_id')
+                                                        <div class="help-block with-errors">{{$message}}</div>
+                                                    @enderror
+                                                </div>
                                             </div>
                                         </div>
                                         {{-- <div class="col-md-6">
@@ -283,19 +302,14 @@
                                                 <div class="help-block with-errors"></div>
                                             </div>
                                             <div class="submit-button">
-                                                <button class="btn btn-common" id="submit" type="submit">Submit</button>
-                                                <div id="msgSubmit" class="h3 hidden"></div>
+                                                <button class="btn btn-common" style="border-radius: 15px" id="submit" type="submit">Submit</button>
+                                                    <div id="msgSubmit" class="h3 hidden"></div>
                                                 <div class="clearfix"></div>
                                             </div>
                                         </div>
                                     </div>
                             @endif
                         </form>
-                    </div>
-                    <!-- End Col -->
-                    <!-- Start Col -->
-                    <div class="col-lg-1">
-
                     </div>
                     <!-- End Col -->
                     <!-- Start Col -->
@@ -344,10 +358,10 @@
                         <div class="widget">
                             <h3 class="block-title">Links</h3>
                             <ul class="menu">
-                                <li><a href="#"> - Home</a></li>
-                                <li><a href="#">- About</a></li>
-                                <li><a href="#">- Resources</a></li>
-                                <li><a href="#">- Contact</a></li>
+                                <li><a href="#home"> - Home</a></li>
+                                <li><a href="#business-plan">- About</a></li>
+                                <li><a href="#blog">- Resources</a></li>
+                                <li><a href="#contact">- Contact</a></li>
                             </ul>
                         </div>
                     </div>

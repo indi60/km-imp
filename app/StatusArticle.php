@@ -16,4 +16,9 @@ class StatusArticle extends Model
     {
         return $this->belongsTo('App\Article');
     }
+
+    public function Peoject()
+    {
+        return $this->belongsTo('App\Peoject');
+    }
 }

@@ -94,7 +94,7 @@
                             @if (auth()->user()->role_id == "1")
                             <td class="text-center">
                                 @foreach ($Ticket->AssignedTo as $item)
-                                    <img src="{{ asset('storage/photos/upload/avatar/'.$item->avatar) }}" alt="avatar" width="40px" class="rounded-circle"><span class="ml-4">{{ $item->name }}</span>
+                                    <img src="{{ asset('storage/photos/upload/avatar/'.$item->avatar) }}" alt="avatar" width="40px" class="rounded-circle">
                                 @endforeach
                             </td>
                             @endif
@@ -118,9 +118,13 @@
                                         </form>
                                     </div>
                                 @else
-                                    <a href="/project/ticket/{{ $Ticket->id }}/edit" class="btn btn-small text-success">
-                                        <i class="fa fa-edit"></i><span class="ml-2">Edit</span>
-                                    </a>
+                                    @if ($Ticket->user_id == auth()->user()->id)
+                                        <a href="/project/ticket/{{ $Ticket->id }}/edit" class="btn btn-small text-success">
+                                            <i class="fa fa-edit"></i><span class="ml-2">Edit</span>
+                                        </a>
+                                    @else
+                                        <p>Tidak Dapat Akses</p>
+                                    @endif
                                 @endif
                             </td>
                         </tr>

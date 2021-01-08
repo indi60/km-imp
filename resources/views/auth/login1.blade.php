@@ -12,12 +12,12 @@
 
     <!-- Bootstrap -->
     <link href="{{asset('assets/css/bootstrap.min.css')}}" rel="stylesheet">
-    <link rel="stylesheet" href="{{ asset('assets/css/main.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
 </head>
 
 <body>
 
-    <section id="loginregister">
+    <div id="loginregister">
         <div class="container">
             <div class="row justify-content-center">
                 <div class="col-12 col-md-8 col-lg-8 col-xl-6">
@@ -44,7 +44,7 @@
                             <input type="password" class="form-control" placeholder="Confirm Password">
                         </div>
                     </div>
-                    <div class="row justify-content-start mt-4">
+                    <div class="row justify-content-start mt-4 mb-4">
                         <div class="col">
                             <div class="form-check">
                                 <label class="form-check-label">
@@ -52,14 +52,13 @@
                                     I Read and Accept <a href="https://www.froala.com">Terms and Conditions</a>
                                 </label>
                             </div>
-
                             <button class="btn btn-primary mt-4">Submit</button>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </section>
+    </div>
 
 
 </body>

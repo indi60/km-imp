@@ -26,7 +26,7 @@
             <div class="bg-white py-2 collapse-inner rounded">
                 <a class="collapse-item" href="{{ url('/manage-member') }}">
                     <img src="{{ (asset('assets/images/logo/manage-member.svg')) }}" width="30" height="20" alt="" srcset="">
-                    <span class="ml-1" style="font-size: 14px"><b>Member</b></span>
+                    <span class="ml-1" style="font-size: 14px"><b>User</b></span>
                 </a>
 
                 <a class="collapse-item" href="{{ url('/category-project') }}">
@@ -46,7 +46,6 @@
             </div>
         </div>
     </li>
-    @endif
 
     <!-- Nav Item - Tables -->
     <li class="nav-item">
@@ -55,6 +54,15 @@
             <span class="ml-md-4 mb-sm-2" style="font-size: 17.5px"><b>Project</b></span>
         </a>
     </li>
+
+    <!-- Nav Item - Tables -->
+    <li class="nav-item">
+        <a class="nav-link" href="{{ url('/issue') }}">
+            <img src="{{ (asset('assets/images/logo/issue.svg')) }}" width="30" alt="" srcset="">
+            <span class="ml-md-4 mb-sm-2" style="font-size: 17.5px"><b>Issue</b></span>
+        </a>
+    </li>
+    @endif
 
     <!-- Nav Item - Tables -->
         <li class="nav-item">

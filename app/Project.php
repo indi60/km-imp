@@ -10,6 +10,7 @@ class Project extends Model
     protected $fillable = [
         'name',
         'category_id',
+        'status_article_id',
     ];
 
     public function CategoryProject()
@@ -25,5 +26,10 @@ class Project extends Model
     public function ProjectAssigned()
     {
         return $this->hasMany('App\ProjectAssigned', 'project_id');
+    }
+
+    public function StatusArticle()
+    {
+        return $this->hasMany('App\StatusArticle', 'id', 'status_article_id');
     }
 }

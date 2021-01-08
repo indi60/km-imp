@@ -1,7 +1,9 @@
 <?php
 
 use App\Article;
+use App\Description;
 use App\Job;
+use App\Project;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -18,8 +20,9 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     $Articles = Article::where('status_article_id', '1')->take(9)->get();
-    $Jobs = Job::all();
-    return view('landing_page.welcome', compact('Articles', 'Jobs'));
+    $Projects = Project::where('status_article_id', '1')->get();
+    $Descriptions = Description::all();
+    return view('landing_page.welcome', compact('Articles', 'Projects', 'Descriptions'));
 })->name('welcome');
 
 Route::resource('post', 'PostController');
@@ -81,6 +84,13 @@ Route::group(['middleware' => ['auth', 'CekRole:1']], function () {
     Route::resource('manage-member', 'Admin\ManageMemberController');
     Route::resource('category-project', 'Admin\CategoryProjectController');
     Route::resource('laporan', 'Admin\LaporanController');
+    Route::resource('issue', 'Admin\IssueController');
+
+    //approve guest user
+    Route::put('manage-member/approve/{id}', 'Admin\ManageMemberController@approve');
+
+    //sort
+    Route::get('/sort', 'Admin\LaporanController@sort');
 
     //Data setting
     Route::resource('description', 'Admin\Setting\DescriptionController');
