@@ -10,7 +10,7 @@
     <li class="nav-item">
         <a class="nav-link" href="{{ url('/home') }}">
             <img src="{{ (asset('assets/images/logo/home.svg')) }}" width="30" alt="" srcset="">
-            <span class="ml-md-4 mb-sm-2" style="font-size: 17.5px"><b class="text-center">Home</b></span>
+            <span1 1 class="ml-md-4 mb-sm-2" style="font-size: 17.5px"><b class="text-center">Home</b></span1>
         </a>
     </li>
 
@@ -20,7 +20,7 @@
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities"
             aria-expanded="true" aria-controls="collapseUtilities">
             <img src="{{ (asset('assets/images/logo/manage.svg')) }}" width="30" alt="" srcset="">
-            <span class="ml-md-4 mb-sm-2" style="font-size: 17.5px"><b>Manage</b></span>
+            <span3 class="ml-md-4 mb-sm-2" style="font-size: 17.5px"><b>Manage</b></span3>
         </a>
         <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
@@ -47,13 +47,15 @@
         </div>
     </li>
 
+    @if (auth()->user()->role_id == '2')
     <!-- Nav Item - Tables -->
     <li class="nav-item">
         <a class="nav-link" href="{{ url('/project') }}">
             <img src="{{ (asset('assets/images/logo/project.svg')) }}" width="30" alt="" srcset="">
-            <span class="ml-md-4 mb-sm-2" style="font-size: 17.5px"><b>Project</b></span>
+            <span3 class="ml-md-4 mb-sm-2" style="font-size: 17.5px"><b>Project</b></span3>
         </a>
     </li>
+    @endif
 
     <!-- Nav Item - Tables -->
     <li class="nav-item">
@@ -68,7 +70,7 @@
         <li class="nav-item">
             <a class="nav-link" href="{{ url('/article') }}">
                 <img src="{{ (asset('assets/images/logo/explore.svg')) }}" width="30" alt="" srcset="">
-                <span class="ml-md-4 mb-sm-2" style="font-size: 17.5px"><b>Explore</b></span>
+                <span2 class="ml-md-4 mb-sm-2" style="font-size: 17.5px"><b>Explore</b></span2>
             </a>
         </li>
 

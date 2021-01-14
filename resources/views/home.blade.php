@@ -4,6 +4,8 @@
     @section('title', 'Admin | Dashboard')
 @elseif(auth()->user()->role_id == "2")
     @section('title', 'Member | Dashboard')
+@elseif(auth()->user()->role_id == "3")
+    @section('title', 'Reporter | Dashboard')
 @endif
 
 @section('container')
@@ -13,6 +15,7 @@
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
         <h1 class="h3 mb-0" style="font-size: 32px; color: black"><b>Dashboard</b></h1>
     </div>
+    @if (auth()->user()->role_id == '1 or 2')
     <!-- Content Row -->
     <div class="row">
         <div class="col-xl-4 col-md-6 mb-4">
@@ -63,8 +66,9 @@
             </div>
         </div>
     </div>
-
     <!-- Content Row -->
+    @endif
+    
     <div class="row">
         <!-- Area Chart -->
         <div class="col-xl-8 col-lg-7">

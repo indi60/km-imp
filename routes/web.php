@@ -28,6 +28,8 @@ Route::get('/', function () {
 Route::resource('post', 'PostController');
 Route::get('/post/{id}/show', 'PostController@show');
 
+Route::get('/reporter', 'HomeController@index')->name('reporter');
+
 Auth::routes();
 
 // Role_id
@@ -110,4 +112,8 @@ Route::group(['middleware' => ['auth', 'CekRole:1']], function () {
     Route::get('/project/{id}/edit', 'Admin\ProjectController@edit');
     Route::put('/project/{id}', 'Admin\ProjectController@update');
     Route::delete('/project/{id}', 'Admin\ProjectController@destroy');
+});
+
+Route::group(['middleware' => ['auth', 'CekRole:1,2,3']], function () {
+    Route::resource('article', 'ArticleController');
 });

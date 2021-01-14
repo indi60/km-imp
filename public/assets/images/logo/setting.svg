@@ -1,7 +1,7 @@
 <svg width="26" height="26" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
-<rect x="0.132675" width="25.8673" height="26" rx="12.9337" fill="white"/>
-<path fill-rule="evenodd" clip-rule="evenodd" d="M12.9337 26C5.7951 26 0 20.1752 0 13C7.14995 13 12.9337 18.8248 12.9337 26Z" fill="#1ED6D8"/>
-<path fill-rule="evenodd" clip-rule="evenodd" d="M0 13C0 5.82482 5.7951 0 12.9337 0C12.9337 7.17518 7.14995 13 0 13Z" fill="#2DEDEA"/>
-<path fill-rule="evenodd" clip-rule="evenodd" d="M12.9337 26C12.9337 18.8248 18.7288 13 25.8673 13C25.8673 20.1752 20.0836 26 12.9337 26Z" fill="#0BADB3"/>
-<path fill-rule="evenodd" clip-rule="evenodd" d="M25.8673 13C18.7288 13 12.9337 7.17518 12.9337 0C20.0836 0 25.8673 5.82482 25.8673 13Z" fill="#1ED6D8"/>
+<rect x="1.12247" y="1" width="23.8775" height="24" rx="11.9388" stroke="black" stroke-width="2"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M12.9388 25C6.34933 25 1 19.6232 1 13C7.59995 13 12.9388 18.3768 12.9388 25Z" stroke="#3A3A3A" stroke-width="2"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M1 13C1 6.37676 6.34933 1 12.9388 1C12.9388 7.62324 7.59995 13 1 13Z" stroke="#575757" stroke-width="2"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M12.9388 25C12.9388 18.3768 18.2881 13 24.8775 13C24.8775 19.6232 19.5387 25 12.9388 25Z" stroke="#1D1D1D" stroke-width="2"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M24.8775 13C18.2881 13 12.9388 7.62324 12.9388 1C19.5387 1 24.8775 6.37676 24.8775 13Z" stroke="#3A3A3A" stroke-width="2"/>
 </svg>

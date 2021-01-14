@@ -31,9 +31,10 @@
             <div id="content" class="bg-white">
                 @include('layouts.partials.topbar')
                 @yield('container')
-            </div>
-            <!-- End of Main Content -->
+                <!-- End of Main Content -->
             @include('layouts.partials.footer')
+            </div>
+            
         </div>
         <!-- End of Content Wrapper -->
     </div>
