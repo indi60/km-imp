@@ -15,14 +15,14 @@
         </div>
 
         <div class="card-body">
-            <form class=" form-signin" action="/priority/{{ $Priorities->id }}" method="POST">
+            <form class=" form-signin" action="/priority/{{ $priorities->id }}" method="POST">
                 @method('put')
                 @csrf
 
                 <div class="form-group">
                     <label for="name">Nama Priority</label>
                     <input type="text" class="form-control @error('name') is-invalid @enderror" id="name"
-                        placeholder="Masukan Nama Priority" name="name" value="{{ $Priorities->name }}">
+                        placeholder="Masukan Nama Priority" name="name" value="{{ $priorities->name }}">
                     @error('name')
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
@@ -31,7 +31,7 @@
                 <div class="form-group">
                     <label for="color">Warna Priority</label>
                     <input type="text" class="form-control colorpicker @error('color') is-invalid @enderror" id="color"
-                        placeholder="Masukan Warna Priority" name="color" value="{{ $Priorities->color }}">
+                        placeholder="Masukan Warna Priority" name="color" value="{{ $priorities->color }}">
                     @error('color')
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror

@@ -4,15 +4,13 @@
     @section('title', 'Admin | Detail Artikel')
 @elseif(auth()->user()->role_id == "2")
     @section('title', 'Member | Detail Artikel')
-@elseif(auth()->user()->role_id == "3")
-    @section('title', 'Reporter | Detail Artikel')
 @endif
 
 @section('container')
 <!-- Begin Page Content -->
 <div class="container-fluid">
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-        <h4 class="h4 mb-0 text-gray-800">{{ $Articles->title }}</h4>
+        <h4 class="h4 mb-0 text-gray-800">{{ $articles->title }}</h4>
     </div>
     <hr>
     <div class="row">
@@ -20,15 +18,15 @@
             <div class="card shadow mb-4">
                 <div class="card-header py-3">
                     <p class="card-title" style="margin-bottom: -5px">
-                        <b>{{ $Articles->author_name }}</b>,
+                        <b>{{ $articles->author_name }}</b>,
                         <span>
-                            created this posts {{ $Articles->created_at->diffForHumans() }}
+                            created this posts {{ $articles->created_at->diffForHumans() }}
                         </span>
                     </p>
                 </div>
 
-                <div class="card-body">
-                    {!! $Articles->content !!}
+                <div class="card-body container-fluid">
+                    {!! $articles->content !!}
                 </div>
             </div>
         </div>

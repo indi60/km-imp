@@ -21,14 +21,14 @@ class SettingController extends Controller
      */
     public function index()
     {
-        $count_total_project = Project::all()->count();
-        $count_total_tiket = Ticket::all()->count();
-        $Roles = Role::all();
-        $Statuses = Status::all();
-        $Jobs = Job::all();
-        $Priorities = Priority::all();
-        $Descriptions = Description::all();
-        return view('admin.setting.index', compact('Descriptions', 'Roles', 'Statuses', 'Jobs', 'Priorities', 'count_total_project', 'count_total_tiket'));
+        $countTotalProject = Project::all()->count();
+        $countTotalTicket = Ticket::all()->count();
+        $roles = Role::all();
+        $statuses = Status::all();
+        $jobs = Job::all();
+        $priorities = Priority::all();
+        $descriptions = Description::all();
+        return view('admin.setting.index', compact('descriptions', 'roles', 'statuses', 'jobs', 'priorities', 'countTotalProject', 'countTotalTicket'));
     }
 
     /**

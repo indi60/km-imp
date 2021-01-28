@@ -11,7 +11,7 @@ class CategoryProject extends Model
         'name',
     ];
 
-    public function Project()
+    public function project()
     {
         return $this->belongsTo('App\Project');
     }

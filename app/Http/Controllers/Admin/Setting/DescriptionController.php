@@ -60,10 +60,10 @@ class DescriptionController extends Controller
      */
     public function edit($id)
     {
-        $count_total_project = Project::all()->count();
-        $count_total_tiket = Ticket::all()->count();
-        $Descriptions = Description::find($id);
-        return view('admin.description.edit', compact('Descriptions', 'count_total_project', 'count_total_tiket'));
+        $countTotalProject = Project::all()->count();
+        $countTotalTicket = Ticket::all()->count();
+        $descriptions = Description::find($id);
+        return view('admin.setting.description.edit', compact('descriptions', 'countTotalProject', 'countTotalTicket'));
     }
 
     /**
@@ -79,9 +79,9 @@ class DescriptionController extends Controller
             'desc' => 'required',
         ]);
 
-        $Descriptions = Description::find($id);
-        $Descriptions->desc = $request->desc;
-        $Descriptions->update();
+        $descriptions = Description::find($id);
+        $descriptions->desc = $request->desc;
+        $descriptions->update();
         return redirect('/setting')->with('status', 'Berhasil Memperbarui Deskripsi!');
     }
 

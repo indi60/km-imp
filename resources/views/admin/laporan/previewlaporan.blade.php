@@ -32,36 +32,36 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach($Tickets as $Ticket)
+                        @foreach($tickets as $ticket)
                             <tr>
                                 <th scope="row" class="text-center">
                                     <strong>
-                                            TCK-{{ $Ticket->id }}
+                                            TCK-{{ $ticket->id }}
                                     </strong>
                                 </th>
-                                <td class="text-center">{{ $Ticket->author_name }}</td>
-                                <td class="text-center">{{ $Ticket->author_email }}</td>
-                                <td class="text-center">{{ $Ticket->title }}</td>
+                                <td class="text-center">{{ $ticket->author_name }}</td>
+                                <td class="text-center">{{ $ticket->author_email }}</td>
+                                <td class="text-center">{{ $ticket->title }}</td>
                                 <td class="text-center">
-                                    @foreach($Ticket->Project as $item)
+                                    @foreach($ticket->project as $item)
                                         {{ $item->name }} Bagian
-                                        @foreach($item->CategoryProject as $items)
+                                        @foreach($item->category_project as $items)
                                             {{ $items->name }}
                                         @endforeach
                                     @endforeach
                                 </td>
                                 <td class="text-center">
-                                    @foreach($Ticket->AssignedTo as $item)
+                                    @foreach($ticket->assigned_to as $item)
                                         {{ $item->name }}
                                     @endforeach
                                 </td>
                                 <td class="text-center">
-                                    @foreach($Ticket->Status as $item)
+                                    @foreach($ticket->status as $item)
                                         <span class="badge badge-pill text-white" style="background-color: {{ $item->color }}">{{ $item->name }}</span>
                                     @endforeach
                                 </td>
                                 <td class="text-center">
-                                    @foreach ($Ticket->Priority as $item)
+                                    @foreach ($ticket->priority as $item)
                                         <span class="badge badge-pill text-white" style="background-color: {{ $item->color }}">{{ $item->name }}</span>
                                     @endforeach
                                 </td>

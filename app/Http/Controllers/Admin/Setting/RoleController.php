@@ -27,9 +27,9 @@ class RoleController extends Controller
      */
     public function create()
     {
-        $count_total_project = Project::all()->count();
-        $count_total_tiket = Ticket::all()->count();
-        return view('admin.setting.role.create', compact('count_total_project', 'count_total_tiket'));
+        $countTotalProject = Project::all()->count();
+        $countTotalTicket = Ticket::all()->count();
+        return view('admin.setting.role.create', compact('countTotalProject', 'countTotalTicket'));
     }
 
     /**
@@ -66,10 +66,10 @@ class RoleController extends Controller
      */
     public function edit($id)
     {
-        $count_total_project = Project::all()->count();
-        $count_total_tiket = Ticket::all()->count();
-        $Roles = Role::find($id);
-        return view('admin.setting.role.edit', compact('Roles', 'count_total_project', 'count_total_tiket'));
+        $countTotalProject = Project::all()->count();
+        $countTotalTicket = Ticket::all()->count();
+        $roles = Role::find($id);
+        return view('admin.setting.role.edit', compact('roles', 'countTotalProject', 'countTotalTicket'));
     }
 
     /**
@@ -85,9 +85,9 @@ class RoleController extends Controller
             'name' => 'required',
         ]);
 
-        $Roles = Role::find($id);
-        $Roles->name = $request->name;
-        $Roles->update();
+        $roles = Role::find($id);
+        $roles->name = $request->name;
+        $roles->update();
         return redirect('/setting')->with('status', 'Data ' . $request->name . ' Berhasil Diubah!');
     }
 
@@ -99,8 +99,8 @@ class RoleController extends Controller
      */
     public function destroy($id)
     {
-        $Roles = Role::find($id);
-        $Roles->delete();
+        $roles = Role::find($id);
+        $roles->delete();
         return redirect('/setting')->with('statusDelete', 'Data Berhasil Dihapus!');
     }
 }

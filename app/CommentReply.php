@@ -15,12 +15,12 @@ class CommentReply extends Model
         'comment_reply_text',
     ];
 
-    public function User()
+    public function user()
     {
         return $this->hasMany('App\User', 'id', 'user_id');
     }
 
-    public function Comment()
+    public function comment()
     {
         return $this->belongsTo('App\Comment');
     }

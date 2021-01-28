@@ -27,9 +27,9 @@ class PriorityController extends Controller
      */
     public function create()
     {
-        $count_total_project = Project::all()->count();
-        $count_total_tiket = Ticket::all()->count();
-        return view('admin.setting.priority.create', compact('count_total_project', 'count_total_tiket'));
+        $countTotalProject = Project::all()->count();
+        $countTotalTicket = Ticket::all()->count();
+        return view('admin.setting.priority.create', compact('countTotalProject', 'countTotalTicket'));
     }
 
     /**
@@ -67,10 +67,10 @@ class PriorityController extends Controller
      */
     public function edit($id)
     {
-        $count_total_project = Project::all()->count();
-        $count_total_tiket = Ticket::all()->count();
-        $Priorities = Priority::find($id);
-        return view('admin.setting.priority.edit', compact('Priorities', 'count_total_project', 'count_total_tiket'));
+        $countTotalProject = Project::all()->count();
+        $countTotalTicket = Ticket::all()->count();
+        $priorities = Priority::find($id);
+        return view('admin.setting.priority.edit', compact('priorities', 'countTotalProject', 'countTotalTicket'));
     }
 
     /**
@@ -87,10 +87,10 @@ class PriorityController extends Controller
             'color' => 'required'
         ]);
 
-        $Priorities = Priority::find($id);
-        $Priorities->name = $request->name;
-        $Priorities->color = $request->color;
-        $Priorities->update();
+        $priorities = Priority::find($id);
+        $priorities->name = $request->name;
+        $priorities->color = $request->color;
+        $priorities->update();
         return redirect('/setting')->with('status', 'Data ' . $request->name . ' Berhasil Diubah!');
     }
 
@@ -102,8 +102,8 @@ class PriorityController extends Controller
      */
     public function destroy($id)
     {
-        $Priorities = Priority::find($id);
-        $Priorities->delete();
+        $priorities = Priority::find($id);
+        $priorities->delete();
         return redirect('/setting')->with('statusDelete', 'Data Berhasil Dihapus!');
     }
 }

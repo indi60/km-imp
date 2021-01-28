@@ -13,22 +13,22 @@ class Project extends Model
         'status_article_id',
     ];
 
-    public function CategoryProject()
+    public function category_project()
     {
         return $this->hasMany('App\CategoryProject', 'id', 'category_id');
     }
 
-    public function Ticket()
+    public function ticket()
     {
         return $this->hasMany('App\Ticket',  'project_id');
     }
 
-    public function ProjectAssigned()
+    public function project_assigned()
     {
         return $this->hasMany('App\ProjectAssigned', 'project_id');
     }
 
-    public function StatusArticle()
+    public function status_article()
     {
         return $this->hasMany('App\StatusArticle', 'id', 'status_article_id');
     }

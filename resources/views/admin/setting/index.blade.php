@@ -9,22 +9,7 @@
         <h1 class="h3 mb-0" style="font-size: 32px; color: black"><b>Data Setting</b></h1>
     </div>
 
-    <!-- Flash Data -->
-    @if(session('status'))
-        <div class="alert alert-success alert-dismissible fade show" role="alert">
-            {{ session('status') }}
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
-        </div>
-    @elseif(session('statusDelete'))
-        <div class="alert alert-danger alert-dismissible fade show" role="alert">
-            {{ session('statusDelete') }}
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
-        </div>
-    @endif
+    @include('includes/alert')
 
     <!-- DataTales Example -->
     <div class="card shadow mb-4">
@@ -48,15 +33,15 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach($Jobs as $Job)
+                        @foreach($jobs as $job)
                             <tr>
                                 <th scope="row" class="text-center"><strong>{{ $loop->iteration }}</strong></th>
-                                <td class="text-center">{{ $Job->name }}</td>
+                                <td class="text-center">{{ $job->name }}</td>
                                 <td class="text-center">
-                                    <a href="/job/{{ $Job->id }}/edit" class="btn btn-small text-success">
+                                    <a href="/job/{{ $job->id }}/edit" class="btn btn-small text-success">
                                         <i class="fa fa-edit"></i><span class="ml-2">Edit</span>
                                     </a>
-                                    <form action="/job/{{ $Job->id }}" method="POST" class="d-inline">
+                                    <form action="/job/{{ $job->id }}" method="POST" class="d-inline">
                                         @method('delete')
                                         @csrf
                                         <button type="submit" class="btn btn-small text-danger">
@@ -93,15 +78,15 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach($Roles as $Role)
+                        @foreach($roles as $role)
                         <tr>
                             <th scope="row" class="text-center"><strong>{{ $loop->iteration }}</strong></th>
-                            <td class="text-center">{{ $Role->name }}</td>
+                            <td class="text-center">{{ $role->name }}</td>
                             <td class="text-center">
-                                <a href="/role/{{ $Role->id }}/edit" class="btn btn-small text-success">
+                                <a href="/role/{{ $role->id }}/edit" class="btn btn-small text-success">
                                     <i class="fa fa-edit"></i><span class="ml-2">Edit</span>
                                 </a>
-                                <form action="/role/{{ $Role->id }}" method="POST" class="d-inline">
+                                <form action="/role/{{ $role->id }}" method="POST" class="d-inline">
                                     @method('delete')
                                     @csrf
                                     <button type="submit" class="btn btn-small text-danger">
@@ -139,16 +124,16 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach($Priorities as $Priority)
+                        @foreach($priorities as $priority)
                         <tr>
                             <th scope="row" class="text-center"><strong>{{ $loop->iteration }}</strong></th>
-                            <td class="text-center">{{ $Priority->name }}</td>
-                            <td style="background-color:{{ $Priority->color ?? '#FFFFFF' }}" class="text-center"></td>
+                            <td class="text-center">{{ $priority->name }}</td>
+                            <td style="background-color:{{ $priority->color ?? '#FFFFFF' }}" class="text-center"></td>
                             <td class="text-center">
-                                <a href="/priority/{{ $Priority->id }}/edit" class="btn btn-small text-success">
+                                <a href="/priority/{{ $priority->id }}/edit" class="btn btn-small text-success">
                                     <i class="fa fa-edit"></i><span class="ml-2">Edit</span>
                                 </a>
-                                <form action="/priority/{{ $Priority->id }}" method="POST" class="d-inline">
+                                <form action="/priority/{{ $priority->id }}" method="POST" class="d-inline">
                                     @method('delete')
                                     @csrf
                                     <button type="submit" class="btn btn-small text-danger">
@@ -186,16 +171,16 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach($Statuses as $Status)
+                        @foreach($statuses as $status)
                         <tr>
                             <th scope="row" class="text-center"><strong>{{ $loop->iteration }}</strong></th>
-                            <td class="text-center">{{ $Status->name }}</td>
-                            <td style="background-color:{{ $Status->color ?? '#FFFFFF' }}" class="text-center"></td>
+                            <td class="text-center">{{ $status->name }}</td>
+                            <td style="background-color:{{ $status->color ?? '#FFFFFF' }}" class="text-center"></td>
                             <td class="text-center">
-                                <a href="/status/{{ $Status->id }}/edit" class="btn btn-small text-success">
+                                <a href="/status/{{ $status->id }}/edit" class="btn btn-small text-success">
                                     <i class="fa fa-edit"></i><span class="ml-2">Edit</span>
                                 </a>
-                                <form action="/status/{{ $Status->id }}" method="POST" class="d-inline">
+                                <form action="/status/{{ $status->id }}" method="POST" class="d-inline">
                                     @method('delete')
                                     @csrf
                                     <button type="submit" class="btn btn-small text-danger">
@@ -217,16 +202,16 @@
                 <div class="card-header">
                     <h5>Deskripsi</h5>
                 </div>
-                @foreach ($Descriptions as $Description)
+                @foreach ($descriptions as $description)
                     <div class="card-body">
-                        <p>{{ $Description->desc }}</p>
-                        <a href="/description/{{ $Description->id }}/edit" class="btn btn-small text-success float-right">
+                        <p>{{ $description->desc }}</p>
+                        <a href="/description/{{ $description->id }}/edit" class="btn btn-small text-success float-right">
                             <i class="fa fa-edit"></i><span class="ml-2">Edit</span>
                         </a>
                     </div>
                     <div class="card-footer">
                         <small class="text-muted">Last updated
-                            {{ $Description->updated_at->diffForHumans() }}
+                            {{ $description->updated_at->diffForHumans() }}
                         </small>
                     </div>
                 @endforeach
@@ -243,7 +228,6 @@
         $('#dataTable3').DataTable();
         $('#dataTable4').DataTable();
     });
-
 </script>
 @endsection
 

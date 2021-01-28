@@ -17,10 +17,10 @@ class CategoryProjectController extends Controller
      */
     public function index()
     {
-        $count_total_project = Project::all()->count();
-        $count_total_tiket = Ticket::all()->count();
-        $CategoryProjects = CategoryProject::all();
-        return view('admin.category_project.index', compact('CategoryProjects', 'count_total_project', 'count_total_tiket'));
+        $countTotalProject = Project::all()->count();
+        $countTotalTicket = Ticket::all()->count();
+        $categoryProjects = CategoryProject::all();
+        return view('admin.category_project.index', compact('categoryProjects', 'countTotalProject', 'countTotalTicket'));
     }
 
     /**
@@ -30,9 +30,9 @@ class CategoryProjectController extends Controller
      */
     public function create()
     {
-        $count_total_project = Project::all()->count();
-        $count_total_tiket = Ticket::all()->count();
-        return view('admin.category_project.create', compact('count_total_project', 'count_total_tiket'));
+        $countTotalProject = Project::all()->count();
+        $countTotalTicket = Ticket::all()->count();
+        return view('admin.category_project.create', compact('countTotalProject', 'countTotalTicket'));
     }
 
     /**
@@ -69,10 +69,10 @@ class CategoryProjectController extends Controller
      */
     public function edit($id)
     {
-        $count_total_project = Project::all()->count();
-        $count_total_tiket = Ticket::all()->count();
-        $CategoryProjects = CategoryProject::find($id);
-        return view('admin.category_project.edit', compact('CategoryProjects', 'count_total_project', 'count_total_tiket'));
+        $countTotalProject = Project::all()->count();
+        $countTotalTicket = Ticket::all()->count();
+        $categoryProjects = CategoryProject::find($id);
+        return view('admin.category_project.edit', compact('categoryProjects', 'countTotalProject', 'countTotalTicket'));
     }
 
     /**
@@ -88,9 +88,9 @@ class CategoryProjectController extends Controller
             'name' => 'required',
         ]);
 
-        $CategoryProjects = CategoryProject::find($id);
-        $CategoryProjects->name = $request->name;
-        $CategoryProjects->update();
+        $categoryProjects = CategoryProject::find($id);
+        $categoryProjects->name = $request->name;
+        $categoryProjects->update();
         return redirect('/category-project')->with('status', 'Data ' . $request->name . ' Berhasil Diubah!');
     }
 
@@ -102,8 +102,8 @@ class CategoryProjectController extends Controller
      */
     public function destroy($id)
     {
-        $CategoryProjects = CategoryProject::find($id);
-        $CategoryProjects->delete();
+        $categoryProjects = CategoryProject::find($id);
+        $categoryProjects->delete();
         return redirect('/category-project')->with('statusDelete', 'Data Berhasil Dihapus!');
     }
 }

@@ -11,14 +11,14 @@
         </div>
 
         <div class="card-body">
-            <form class=" form-signin" action="/role/{{ $Roles->id }}" method="POST">
+            <form class=" form-signin" action="/role/{{ $roles->id }}" method="POST">
                 @method('put')
                 @csrf
 
                 <div class="form-group">
                     <label for="name">Nama Role</label>
                     <input type="text" class="form-control @error('name') is-invalid @enderror" id="name"
-                        placeholder="Masukan Nama Role" name="name" value="{{ $Roles->name }}">
+                        placeholder="Masukan Nama Role" name="name" value="{{ $roles->name }}">
                     @error('name')
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror

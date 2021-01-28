@@ -18,11 +18,11 @@ class ArticleController extends Controller
      */
     public function index()
     {
-        $count_total_project = Project::all()->count();
-        $count_total_tiket = Ticket::all()->count();
-        $Jobs = Job::all();
-        $Articles = Article::all();
-        return view('article.index', compact('Articles', 'Jobs', 'count_total_project', 'count_total_tiket'));
+        $countTotalProject = Project::all()->count();
+        $countTotalTicket = Ticket::all()->count();
+        $jobs = Job::all();
+        $articles = Article::all();
+        return view('article.index', compact('articles', 'jobs', 'countTotalProject', 'countTotalTicket'));
     }
 
     /**
@@ -32,11 +32,11 @@ class ArticleController extends Controller
      */
     public function create()
     {
-        $count_total_project = Project::all()->count();
-        $count_total_tiket = Ticket::all()->count();
-        $Jobs = Job::all();
-        $StatusArticles = StatusArticle::all();
-        return view('article.create', compact('Jobs', 'StatusArticles', 'count_total_project', 'count_total_tiket'));
+        $countTotalProject = Project::all()->count();
+        $countTotalTicket = Ticket::all()->count();
+        $jobs = Job::all();
+        $statusArticles = StatusArticle::all();
+        return view('article.create', compact('jobs', 'statusArticles', 'countTotalProject', 'countTotalTicket'));
     }
 
     /**
@@ -68,11 +68,11 @@ class ArticleController extends Controller
      */
     public function show($id)
     {
-        $count_total_project = Project::all()->count();
-        $count_total_tiket = Ticket::all()->count();
-        $Articles = Article::find($id);
-        $Jobs = Job::all();
-        return view('article.show', compact('Articles', 'Jobs', 'count_total_project', 'count_total_tiket'));
+        $countTotalProject = Project::all()->count();
+        $countTotalTicket = Ticket::all()->count();
+        $articles = Article::find($id);
+        $jobs = Job::all();
+        return view('article.show', compact('articles', 'jobs', 'countTotalProject', 'countTotalTicket'));
     }
 
     /**
@@ -83,12 +83,12 @@ class ArticleController extends Controller
      */
     public function edit($id)
     {
-        $count_total_project = Project::all()->count();
-        $count_total_tiket = Ticket::all()->count();
-        $Articles = Article::find($id);
-        $Jobs = Job::all();
-        $StatusArticles = StatusArticle::all();
-        return view('article.edit', compact('Articles', 'Jobs', 'StatusArticles', 'count_total_project', 'count_total_tiket'));
+        $countTotalProject = Project::all()->count();
+        $countTotalTicket = Ticket::all()->count();
+        $articles = Article::find($id);
+        $jobs = Job::all();
+        $statusArticles = StatusArticle::all();
+        return view('article.edit', compact('articles', 'jobs', 'statusArticles', 'countTotalProject', 'countTotalTicket'));
     }
 
     /**
@@ -110,15 +110,15 @@ class ArticleController extends Controller
             'status_article_id' => 'required',
         ]);
 
-        $Articles = Article::find($id);
-        $Articles->user_id = auth()->user()->id;
-        $Articles->job_id = $request->job_id;
-        $Articles->title = $request->title;
-        $Articles->content = $request->content;
-        $Articles->author_name = auth()->user()->name;
-        $Articles->author_email = auth()->user()->email;
-        $Articles->status_article_id = $request->status_article_id;
-        $Articles->update();
+        $articles = Article::find($id);
+        $articles->user_id = auth()->user()->id;
+        $articles->job_id = $request->job_id;
+        $articles->title = $request->title;
+        $articles->content = $request->content;
+        $articles->author_name = auth()->user()->name;
+        $articles->author_email = auth()->user()->email;
+        $articles->status_article_id = $request->status_article_id;
+        $articles->update();
         return redirect('/article')->with('status', 'Data ' . $request->title . ' Berhasil Diubah!');
     }
 
@@ -130,8 +130,8 @@ class ArticleController extends Controller
      */
     public function destroy($id)
     {
-        $Articles = Article::find($id);
-        $Articles->delete();
+        $articles = Article::find($id);
+        $articles->delete();
         return redirect('/article')->with('statusDelete', 'Data Berhasil Dihapus!');
     }
 }

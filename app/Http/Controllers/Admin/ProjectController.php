@@ -21,10 +21,11 @@ class ProjectController extends Controller
      */
     public function index()
     {
-        $count_total_project = Project::all()->count();
-        $count_total_tiket = Ticket::all()->count();
-        $Projects = Project::all();
-        return view('admin.project.index', compact('Projects', 'count_total_project', 'count_total_tiket'));
+        $countTotalProject = Project::all()->count();
+        $countTotalTicket = Ticket::all()->count();
+        $projects = Project::all();
+        $currentProjects = User::find(Auth::user()->id);
+        return view('admin.project.index', compact('currentProjects', 'projects', 'countTotalProject', 'countTotalTicket'));
     }
 
     /**
@@ -34,12 +35,12 @@ class ProjectController extends Controller
      */
     public function create()
     {
-        $count_total_project = Project::all()->count();
-        $count_total_tiket = Ticket::all()->count();
-        $CategoryProjects = CategoryProject::all();
-        $Users = User::all();
-        $StatusArticles = StatusArticle::all();
-        return view('admin.project.create', compact('CategoryProjects', 'Users', 'StatusArticles','count_total_project', 'count_total_tiket'));
+        $countTotalProject = Project::all()->count();
+        $countTotalTicket = Ticket::all()->count();
+        $categoryProjects = CategoryProject::all();
+        $users = User::all();
+        $statusArticles = StatusArticle::all();
+        return view('admin.project.create', compact('categoryProjects', 'users', 'statusArticles', 'countTotalProject', 'countTotalTicket'));
     }
 
     /**
@@ -57,15 +58,15 @@ class ProjectController extends Controller
             'status_article_id' => 'required',
         ]);
 
-        $Project = new Project;
-        $Project->name = $request->name;
-        $Project->category_id = $request->category_id;
-        $Project->status_article_id = $request->status_article_id;
-        $Project->save();
+        $project = new Project;
+        $project->name = $request->name;
+        $project->category_id = $request->category_id;
+        $project->status_article_id = $request->status_article_id;
+        $project->save();
 
-        $Assigned = $request->assigned_to_user;
-        foreach ($Assigned as $Assign) {
-            $this->insertData($Project->id, $Assign);
+        $assigned = $request->assigned_to_user;
+        foreach ($assigned as $assign) {
+            $this->insertData($project->id, $assign);
         }
 
         return redirect('/project')->with('status', 'Data ' . $request->name . ' Berhasil Ditambahkan!');
@@ -79,24 +80,24 @@ class ProjectController extends Controller
      */
     public function show(Request $request, $id)
     {
-        $Projects = Project::find($id);
+        $projects = Project::find($id);
         $idProject = $id;
         session(['findIdProjects' => $id]);
 
         if (Auth::user()->role_id == "1") {
-            $count_total_project = Project::all()->count();
-            $count_total_tiket = Ticket::all()->count();
-            $Tickets = Ticket::where('project_id', $id)->get();
-            $count_open_ticket = Ticket::where('project_id', $id)->where('status_id', '1')->count();
-            $count_closed_ticket = Ticket::where('project_id', $id)->where('status_id', '2')->count();
+            $countTotalProject = Project::all()->count();
+            $countTotalTicket = Ticket::all()->count();
+            $tickets = Ticket::where('project_id', $id)->where('role_id', 1)->orWhere('project_id', $id)->where('role_id', 2)->get();
+            $countOpenTicket = Ticket::where('project_id', $id)->where('status_id', '1')->count();
+            $countClosedTicket = Ticket::where('project_id', $id)->where('status_id', '2')->count();
         } else {
-            $count_total_project = Project::all()->count();
-            $count_total_tiket = Ticket::all()->count();
-            $Tickets = Ticket::where('project_id', $id)->get();
-            $count_open_ticket = Ticket::where('project_id', $id)->where('status_id', '1')->count();
-            $count_closed_ticket = Ticket::where('project_id', $id)->where('status_id', '2')->count();
+            $countTotalProject = Project::all()->count();
+            $countTotalTicket = Ticket::all()->count();
+            $tickets = Ticket::where('project_id', $id)->where('role_id', 1)->orWhere('project_id', $id)->where('role_id', 2)->get();
+            $countOpenTicket = Ticket::where('project_id', $id)->where('status_id', '1')->count();
+            $countClosedTicket = Ticket::where('project_id', $id)->where('status_id', '2')->count();
         }
-        return view('admin.project.show', compact('Projects', 'idProject', 'Tickets', 'count_open_ticket', 'count_closed_ticket', 'count_total_project', 'count_total_tiket'));
+        return view('admin.project.show', compact('projects', 'idProject', 'tickets', 'countOpenTicket', 'countClosedTicket', 'countTotalProject', 'countTotalTicket'));
     }
 
     /**
@@ -107,13 +108,13 @@ class ProjectController extends Controller
      */
     public function edit($id)
     {
-        $count_total_project = Project::all()->count();
-        $count_total_tiket = Ticket::all()->count();
-        $Projects = Project::find($id);
-        $CategoryProjects = CategoryProject::all();
-        $Users = User::all();
-        $StatusArticles = StatusArticle::all();
-        return view('admin.project.edit', compact('Projects', 'CategoryProjects', 'Users', 'StatusArticles', 'count_total_project', 'count_total_tiket'));
+        $countTotalProject = Project::all()->count();
+        $countTotalTicket = Ticket::all()->count();
+        $projects = Project::find($id);
+        $categoryProjects = CategoryProject::all();
+        $users = User::all();
+        $statusArticles = StatusArticle::all();
+        return view('admin.project.edit', compact('projects', 'categoryProjects', 'users', 'statusArticles', 'countTotalProject', 'countTotalTicket'));
     }
 
     /**
@@ -132,20 +133,20 @@ class ProjectController extends Controller
             'status_article_id' => 'required',
         ]);
 
-        $Projects = Project::find($id);
-        $Projects->name = $request->name;
-        $Projects->category_id = $request->category_id;
-        $Projects->status_article_id = $request->status_article_id;
-        $Projects->update();
+        $projects = Project::find($id);
+        $projects->name = $request->name;
+        $projects->category_id = $request->category_id;
+        $projects->status_article_id = $request->status_article_id;
+        $projects->update();
 
-        $CurentProject = ProjectAssigned::where('project_id', $id)->get();
-        foreach ($CurentProject as $item) {
+        $curentProject = ProjectAssigned::where('project_id', $id)->get();
+        foreach ($curentProject as $item) {
             $item->delete();
         }
 
-        $Assigned = $request->assigned_to_user;
-        foreach ($Assigned as $Assign) {
-            $this->insertData($Projects->id, $Assign);
+        $assigned = $request->assigned_to_user;
+        foreach ($assigned as $assign) {
+            $this->insertData($projects->id, $assign);
         }
 
         return redirect('/project')->with('status', 'Data ' . $request->name . ' Berhasil Diubah!');
@@ -159,8 +160,18 @@ class ProjectController extends Controller
      */
     public function destroy($id)
     {
-        $Projects = Project::find($id);
-        $Projects->delete();
+        $curentProject = ProjectAssigned::where('project_id', $id)->get();
+        foreach ($curentProject as $item) {
+            $item->delete();
+        }
+
+        $curentTicket = Ticket::where('project_id', $id)->get();
+        foreach ($curentTicket as $item) {
+            $item->delete();
+        }
+
+        $projects = Project::find($id);
+        $projects->delete();
         return redirect('/project')->with('statusDelete', 'Data Berhasil Dihapus!');
     }
 

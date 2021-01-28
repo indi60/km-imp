@@ -551,7 +551,6 @@ button:focus {
 
 .navbar-expand-md .navbar-toggler {
   background: transparent;
-  border: 1px solid black;
   border-radius: 3px;
   margin: 5px;
   cursor: pointer;
@@ -1198,7 +1197,8 @@ button:focus {
 }
 
 #contact form#contactForm input[type=text],
-#contact form#contactForm input[type=email] {
+#contact form#contactForm input[type=email],
+#contact form#contactForm select{
   min-height: 52px;
   padding: 0px 0 0 28px;
   font-size: 16px;

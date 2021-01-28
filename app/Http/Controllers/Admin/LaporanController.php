@@ -20,13 +20,13 @@ class LaporanController extends Controller
      */
     public function index()
     {
-        $count_total_project = Project::all()->count();
-        $count_total_tiket = Ticket::all()->count();
-        $Users = User::all();
-        $Statuses = Status::all();
-        $Projects = Project::all();
-        $Tickets = Ticket::all();
-        return view('admin.laporan.index', compact('Tickets', 'Users', 'Statuses', 'Projects', 'count_total_project', 'count_total_tiket'));
+        $countTotalProject = Project::all()->count();
+        $countTotalTicket = Ticket::all()->count();
+        $users = User::all();
+        $statuses = Status::all();
+        $projects = Project::all();
+        $tickets = Ticket::all();
+        return view('admin.laporan.index', compact('tickets', 'users', 'statuses', 'projects', 'countTotalProject', 'countTotalTicket'));
     }
 
     /**
@@ -97,25 +97,31 @@ class LaporanController extends Controller
 
     public function exportExcel()
     {
-        $nama_file = 'laporan pengerjaan issue - ' . date('Y-m-d_H-i-s') . '.xlsx';
-        return Excel::download(new laporanExport, $nama_file);
+        $namaFile = 'laporan pengerjaan issue - ' . date('Y-m-d_H-i-s') . '.xlsx';
+        return Excel::download(new laporanExport, $namaFile);
     }
 
     public function exportPDF()
     {
-        $Tickets = Ticket::all();
-        $pdf = 'PDF'::loadView('admin.previewlaporan', compact('Tickets'))->setPaper('a4', 'potrait');
+        $tickets = Ticket::all();
+        $pdf = 'PDF'::loadView('admin.previewlaporan', compact('tickets'))->setPaper('a4', 'potrait');
         return $pdf->stream('laporan pengerjaan issue - ' . date('Y-m-d_H-i-s') . '.pdf');
     }
 
     public function sort(Request $request)
     {
-        $count_total_project = Project::all()->count();
-        $count_total_tiket = Ticket::all()->count();
-        $Users = User::all();
-        $Statuses = Status::all();
-        $Projects = Project::all();
+        $countTotalProject = Project::all()->count();
+        $countTotalTicket = Ticket::all()->count();
+        $users = User::all();
+        $statuses = Status::all();
+        $projects = Project::all();
 
-        return view('admin.laporan.index', compact('count_total_project', 'count_total_tiket', 'Users', 'Statuses', 'Projects', 'Tickets'));
+        $tickets = Ticket::where('', '')
+            ->where('', '')
+            ->where('', '')
+            ->where('', '')
+            ->where('', '');
+
+        return view('admin.laporan.index', compact('countTotalProject', 'countTotalTicket', 'users', 'statuses', 'projects', 'tickets'));
     }
 }

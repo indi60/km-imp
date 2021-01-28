@@ -79,12 +79,12 @@ class ImageProfileController extends Controller
         if ($file == null) {
             return redirect('/profile')->with('statusDelete', 'Anda Belum Menambahkan Foto Profil!');
         } else {
-            $tujuan_upload = 'storage/photos/upload/avatar';
-            $file->move($tujuan_upload, $file->getClientOriginalName());
+            $tujuanUpload = 'storage/photos/upload/avatar';
+            $file->move($tujuanUpload, $file->getClientOriginalName());
 
-            $ImageProfiles = User::find($id);
-            $ImageProfiles->avatar = $file->getClientOriginalName();
-            $ImageProfiles->update();
+            $imageProfiles = User::find($id);
+            $imageProfiles->avatar = $file->getClientOriginalName();
+            $imageProfiles->update();
             return redirect('/profile')->with('status', 'Foto Profilmu Berhasil Diubah!');
         }
     }

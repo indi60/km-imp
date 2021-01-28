@@ -27,9 +27,9 @@ class StatusController extends Controller
      */
     public function create()
     {
-        $count_total_project = Project::all()->count();
-        $count_total_tiket = Ticket::all()->count();
-        return view('admin.setting.status.create', compact('count_total_project', 'count_total_tiket'));
+        $countTotalProject = Project::all()->count();
+        $countTotalTicket = Ticket::all()->count();
+        return view('admin.setting.status.create', compact('countTotalProject', 'countTotalTicket'));
     }
 
     /**
@@ -67,10 +67,10 @@ class StatusController extends Controller
      */
     public function edit($id)
     {
-        $count_total_project = Project::all()->count();
-        $count_total_tiket = Ticket::all()->count();
+        $countTotalProject = Project::all()->count();
+        $countTotalTicket = Ticket::all()->count();
         $Statuses = Status::find($id);
-        return view('admin.setting.status.edit', compact('Statuses', 'count_total_project', 'count_total_tiket'));
+        return view('admin.setting.status.edit', compact('Statuses', 'countTotalProject', 'countTotalTicket'));
     }
 
     /**

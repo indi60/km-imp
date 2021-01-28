@@ -15,8 +15,8 @@ class PostController extends Controller
      */
     public function index()
     {
-        $Articles = Article::where('status_article_id', '1')->get();
-        return view('landing_page.articles', compact('Articles'));
+        $articles = Article::where('status_article_id', '1')->get();
+        return view('landing_page.articles', compact('articles'));
     }
 
     /**
@@ -48,9 +48,9 @@ class PostController extends Controller
      */
     public function show($id)
     {
-        $Articles = Article::find($id);
-        $Jobs = Job::all();
-        return view('landing_page.showarticle', compact('Articles', 'Jobs'));
+        $articles = Article::find($id);
+        $jobs = Job::all();
+        return view('landing_page.showarticle', compact('articles', 'jobs'));
     }
 
     /**

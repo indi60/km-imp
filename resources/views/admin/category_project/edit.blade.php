@@ -11,14 +11,14 @@
         </div>
 
         <div class="card-body">
-            <form class=" form-signin" action="/category-project/{{ $CategoryProjects->id }}" method="POST">
+            <form class=" form-signin" action="/category-project/{{ $categoryProjects->id }}" method="POST">
                 @method('put')
                 @csrf
 
                 <div class="form-group">
                     <label for="name">Nama Kategori Project</label>
                     <input type="text" class="form-control @error('name') is-invalid @enderror" id="name"
-                        placeholder="Masukan Nama Kategori" name="name" value="{{ $CategoryProjects->name }}">
+                        placeholder="Masukan Nama Kategori" name="name" value="{{ $categoryProjects->name }}">
                     @error('name')
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror

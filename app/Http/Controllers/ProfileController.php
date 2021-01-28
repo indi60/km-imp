@@ -19,10 +19,10 @@ class ProfileController extends Controller
      */
     public function index()
     {
-        $count_total_project = Project::all()->count();
-        $count_total_tiket = Ticket::all()->count();
-        $Profiles = User::where('id', Auth::user()->id)->get();
-        return view('profile.index', compact('Profiles', 'count_total_project', 'count_total_tiket'));
+        $countTotalProject = Project::all()->count();
+        $countTotalTicket = Ticket::all()->count();
+        $userProfiles = User::where('id', Auth::user()->id)->get();
+        return view('profile.index', compact('userProfiles', 'countTotalProject', 'countTotalTicket'));
     }
 
     /**
@@ -65,11 +65,11 @@ class ProfileController extends Controller
      */
     public function edit($id)
     {
-        $count_total_project = Project::all()->count();
-        $count_total_tiket = Ticket::all()->count();
-        $UserProfiles = User::find($id);
-        $Jobs = Job::all();
-        return view('profile.edit', compact('UserProfiles', 'Jobs', 'count_total_project', 'count_total_tiket'));
+        $countTotalProject = Project::all()->count();
+        $countTotalTicket = Ticket::all()->count();
+        $userProfiles = User::find($id);
+        $jobs = Job::all();
+        return view('profile.edit', compact('userProfiles', 'jobs', 'countTotalProject', 'countTotalTicket'));
     }
 
     /**
@@ -90,14 +90,14 @@ class ProfileController extends Controller
             'no_hp' => 'required',
         ]);
 
-        $UserProfiles = User::find($id);
-        $UserProfiles->name = $request->name;
-        $UserProfiles->jenis_kelamin = $request->jenis_kelamin;
-        $UserProfiles->role_id = $request->role_id;
-        $UserProfiles->job_id = $request->job_id;
-        $UserProfiles->alamat = $request->alamat;
-        $UserProfiles->no_hp = $request->no_hp;
-        $UserProfiles->update();
+        $userProfiles = User::find($id);
+        $userProfiles->name = $request->name;
+        $userProfiles->jenis_kelamin = $request->jenis_kelamin;
+        $userProfiles->role_id = $request->role_id;
+        $userProfiles->job_id = $request->job_id;
+        $userProfiles->alamat = $request->alamat;
+        $userProfiles->no_hp = $request->no_hp;
+        $userProfiles->update();
         return redirect('/profile')->with('status', 'Your Profile Has Been Updated!');
     }
 

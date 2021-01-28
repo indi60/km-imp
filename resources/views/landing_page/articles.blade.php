@@ -57,11 +57,11 @@
                                     </li>
                                 @else
                                     <li class="nav-item">
-                                        <a class="btn btn-singin" href="{{ route('login') }}">Sign In <i class="fas fa-arrow-right"></i></a>
+                                        <a class="btn btn-singin" style="border-radius: 15px" href="{{ route('login') }}">Sign In <i class="fas fa-arrow-right"></i></a>
                                     </li>
                                     @if(Route::has('register'))
                                         <li class="nav-item">
-                                            <a class="btn btn-singin" href="{{ route('register') }}">Sign Up</a>
+                                            <a class="btn btn-singup" style="border-radius: 15px" href="{{ route('register') }}">Sign Up</a>
                                         </li>
                                     @endif
                                 @endauth
@@ -89,25 +89,31 @@
                 </div>
                 <!-- End Row -->
 
-                @if($Articles->count() > 0)
+                @if($articles->count() > 0)
                     <!-- Start Row -->
                     <div class="row">
-                        @foreach($Articles as $Article)
+                        @foreach($articles as $article)
                             <!-- Start Col -->
                                 <div class="col-lg-4 col-md-6 col-xs-12 blog-item mb-3">
                                     <!-- Blog Item Starts -->
                                     <div class="blog-item-wrapper">
                                         <div class="blog-item-text">
                                             <h3>
-                                                <a href="/post/{{$Article->id}}/show">{{ $Article->title }}</a>
+                                                <a href="/post/{{$article->id}}/show">{{ $article->title }}</a>
                                             </h3>
-                                            <a href="/post/{{$Article->id}}/show" class="read-more">5 Min read</a>
+                                            <a href="/post/{{$article->id}}/show" class="read-more">5 Min read</a>
                                         </div>
                                         <div class="author">
-                                            <span class="name"><i class="fas fa-user"></i><a href="/post/{{$Article->id}}/show">Posted by
-                                                    {{ $Article->author_name }}</a></span>
-                                            <span class="date float-right"><i class="fas fa-calendar-alt"></i><a
-                                                    href="/post/{{$Article->id}}/show">{{ $Article->created_at->diffForHumans() }}</a></span>
+                                            <span class="name"><i class="fas fa-user"></i>
+                                                <a href="/post/{{$article->id}}/show">
+                                                    Posted by {{ $article->author_name }}
+                                                </a>
+                                            </span>
+                                            <span class="date float-right"><i class="fas fa-calendar-alt"></i>
+                                                <a href="/post/{{$article->id}}/show">
+                                                    {{ $article->created_at->diffForHumans() }}
+                                                </a>
+                                            </span>
                                         </div>
                                     </div>
                                     <!-- Blog Item Wrapper Ends-->
@@ -182,7 +188,7 @@
                     <div class="col-lg-4">
                         <p class="p-small">Copyright ©
                             <a href="https://impstudio.id/">
-                                IMPStudio 2020
+                                IMPStudio {{ Date('Y') }}
                             </a>
                         </p>
                     </div>

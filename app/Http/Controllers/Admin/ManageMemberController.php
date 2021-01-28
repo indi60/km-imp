@@ -19,11 +19,11 @@ class ManageMemberController extends Controller
      */
     public function index()
     {
-        $count_total_project = Project::all()->count();
-        $count_total_tiket = Ticket::all()->count();
-        $Members = User::where('role_id', '2')->get();
-        $Guests = User::where('role_id', '3')->get();
-        return view('admin.manage_member.index', compact('Members', 'Guests', 'count_total_project', 'count_total_tiket'));
+        $countTotalProject = Project::all()->count();
+        $countTotalTicket = Ticket::all()->count();
+        $members = User::where('role_id', '2')->get();
+        $guests = User::where('role_id', '3')->get();
+        return view('admin.manage_member.index', compact('members', 'guests', 'countTotalProject', 'countTotalTicket'));
     }
 
     /**
@@ -33,10 +33,10 @@ class ManageMemberController extends Controller
      */
     public function create()
     {
-        $count_total_project = Project::all()->count();
-        $count_total_tiket = Ticket::all()->count();
-        $Jobs = Job::all();
-        return view('admin.manage_member.create', compact('Jobs', 'count_total_project', 'count_total_tiket'));
+        $countTotalProject = Project::all()->count();
+        $countTotalTicket = Ticket::all()->count();
+        $jobs = Job::all();
+        return view('admin.manage_member.create', compact('jobs', 'countTotalProject', 'countTotalTicket'));
     }
 
     /**
@@ -88,11 +88,11 @@ class ManageMemberController extends Controller
      */
     public function edit($id)
     {
-        $count_total_project = Project::all()->count();
-        $count_total_tiket = Ticket::all()->count();
-        $Members = User::find($id);
-        $Jobs = Job::all();
-        return view('admin.manage_member.edit', compact('Members', 'Jobs', 'count_total_project', 'count_total_tiket'));
+        $countTotalProject = Project::all()->count();
+        $countTotalTicket = Ticket::all()->count();
+        $members = User::find($id);
+        $jobs = Job::all();
+        return view('admin.manage_member.edit', compact('members', 'jobs', 'countTotalProject', 'countTotalTicket'));
     }
 
     /**
@@ -114,16 +114,16 @@ class ManageMemberController extends Controller
             'password' => 'required',
         ]);
 
-        $Members = User::find($id);
-        $Members->name = $request->name;
-        $Members->jenis_kelamin = $request->jenis_kelamin;
-        $Members->role_id = $request->role_id;
-        $Members->job_id = $request->job_id;
-        $Members->alamat = $request->alamat;
-        $Members->no_hp = $request->no_hp;
-        $Members->email = $request->email;
-        $Members->password = Hash::make($request->password);
-        $Members->update();
+        $members = User::find($id);
+        $members->name = $request->name;
+        $members->jenis_kelamin = $request->jenis_kelamin;
+        $members->role_id = $request->role_id;
+        $members->job_id = $request->job_id;
+        $members->alamat = $request->alamat;
+        $members->no_hp = $request->no_hp;
+        $members->email = $request->email;
+        $members->password = Hash::make($request->password);
+        $members->update();
         return redirect('/manage-member')->with('status', 'Data ' . $request->name . ' Berhasil Diubah!');
     }
 
@@ -135,17 +135,17 @@ class ManageMemberController extends Controller
      */
     public function destroy($id)
     {
-        $Members = User::find($id);
-        $Members->delete();
+        $members = User::find($id);
+        $members->delete();
         return redirect('/manage-member')->with('statusDelete', 'Data Berhasil Dihapus!');
     }
 
     public function approve($id)
     {
-        $Guests = User::find($id);
-        $name = $Guests->name;
-        $Guests->role_id = 2;
-        $Guests->update();
+        $guests = User::find($id);
+        $name = $guests->name;
+        $guests->role_id = 2;
+        $guests->update();
         return redirect('/manage-member')->with('status', 'Data ' . $name . ' Berhasil Diapprove!');
     }
 }

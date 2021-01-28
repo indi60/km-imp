@@ -10,7 +10,15 @@
     <li class="nav-item">
         <a class="nav-link" href="{{ url('/home') }}">
             <img src="{{ (asset('assets/images/logo/home.svg')) }}" width="30" alt="" srcset="">
-            <span1 1 class="ml-md-4 mb-sm-2" style="font-size: 17.5px"><b class="text-center">Home</b></span1>
+            <span class="ml-md-4 mb-sm-2" style="font-size: 17.5px"><b class="text-center">Home</b></span>
+        </a>
+    </li>
+
+    <!-- Nav Item - Tables -->
+    <li class="nav-item">
+        <a class="nav-link" href="{{ url('/article') }}">
+            <img src="{{ (asset('assets/images/logo/explore.svg')) }}" width="30" alt="" srcset="">
+            <span class="ml-md-4 mb-sm-2" style="font-size: 17.5px"><b>Explore</b></span>
         </a>
     </li>
 
@@ -20,22 +28,22 @@
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities"
             aria-expanded="true" aria-controls="collapseUtilities">
             <img src="{{ (asset('assets/images/logo/manage.svg')) }}" width="30" alt="" srcset="">
-            <span3 class="ml-md-4 mb-sm-2" style="font-size: 17.5px"><b>Manage</b></span3>
+            <span class="ml-md-4 mb-sm-2" style="font-size: 17.5px"><b>Manage</b></span>
         </a>
         <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
                 <a class="collapse-item" href="{{ url('/manage-member') }}">
-                    <img src="{{ (asset('assets/images/logo/manage-member.svg')) }}" width="30" height="20" alt="" srcset="">
+                    <img src="{{ (asset('assets/images/logo/manage-user.svg')) }}" width="30" height="20" alt="" srcset="">
                     <span class="ml-1" style="font-size: 14px"><b>User</b></span>
                 </a>
 
                 <a class="collapse-item" href="{{ url('/category-project') }}">
-                    <img src="{{ (asset('assets/images/logo/manage-project.svg')) }}" width="30" height="20" alt="" srcset="">
+                    <img src="{{ (asset('assets/images/logo/manage-kategori-project.svg')) }}" width="30" height="20" alt="" srcset="">
                     <span class="ml-1" style="font-size: 14px"><b>Kategori Project</b></span>
                 </a>
 
                 <a class="collapse-item" href="{{ url('/laporan') }}">
-                    <img src="{{ (asset('assets/images/logo/manage-issue.svg')) }}" width="30" height="20" alt="" srcset="">
+                    <img src="{{ (asset('assets/images/logo/manage-laporan.svg')) }}" width="30" height="20" alt="" srcset="">
                     <span class="ml-1" style="font-size: 14px"><b>Laporan</b></span>
                 </a>
 
@@ -47,15 +55,13 @@
         </div>
     </li>
 
-    @if (auth()->user()->role_id == '2')
     <!-- Nav Item - Tables -->
     <li class="nav-item">
         <a class="nav-link" href="{{ url('/project') }}">
             <img src="{{ (asset('assets/images/logo/project.svg')) }}" width="30" alt="" srcset="">
-            <span3 class="ml-md-4 mb-sm-2" style="font-size: 17.5px"><b>Project</b></span3>
+            <span class="ml-md-4 mb-sm-2" style="font-size: 17.5px"><b>Project</b></span>
         </a>
     </li>
-    @endif
 
     <!-- Nav Item - Tables -->
     <li class="nav-item">
@@ -64,46 +70,14 @@
             <span class="ml-md-4 mb-sm-2" style="font-size: 17.5px"><b>Issue</b></span>
         </a>
     </li>
-    @endif
-
+    @else
     <!-- Nav Item - Tables -->
-        <li class="nav-item">
-            <a class="nav-link" href="{{ url('/article') }}">
-                <img src="{{ (asset('assets/images/logo/explore.svg')) }}" width="30" alt="" srcset="">
-                <span2 class="ml-md-4 mb-sm-2" style="font-size: 17.5px"><b>Explore</b></span2>
-            </a>
-        </li>
-
-    @if (auth()->user()->role_id == '1')
-        <!-- Nav Item - Utilities Collapse Menu -->
-        {{-- <li class="nav-item">
-            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#config" aria-expanded="true"
-                aria-controls="collapseUtilities">
-                <img src="{{ (asset('assets/images/logo/setting.svg')) }}" width="30" alt="" srcset="">
-                <span class="ml-md-4 mb-sm-2" style="font-size: 17.5px"><b>Configuration</b></span>
-            </a>
-
-            <div id="config" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
-                <div class="bg-white py-2 collapse-inner rounded">
-                    <a class="collapse-item" href="{{ url('/status') }}">
-                        <i class="fas fa-fw fa-cog"></i>
-                        <span class="ml-1">Status</span>
-                    </a>
-                    <a class="collapse-item" href="{{ url('/priority') }}">
-                        <i class="fas fa-fw fa-cog"></i>
-                        <span class="ml-1">Priority</span>
-                    </a>
-                    <a class="collapse-item" href="{{ url('/role') }}">
-                        <i class="fas fa-fw fa-unlock-alt"></i>
-                        <span class="ml-1">Role</span>
-                    </a>
-                    <a class="collapse-item" href="{{ url('/job') }}">
-                        <i class="fas fa-fw fa-user-tie"></i>
-                        <span class="ml-1">Job</span>
-                    </a>
-                </div>
-            </div>
-        </li> --}}
+    <li class="nav-item">
+        <a class="nav-link" href="{{ url('/ticket') }}">
+            <img src="{{ (asset('assets/images/logo/issue.svg')) }}" width="30" alt="" srcset="">
+            <span class="ml-md-4 mb-sm-2" style="font-size: 17.5px"><b>Issue</b></span>
+        </a>
+    </li>
     @endif
 
     <!-- Nav Item - User Information -->
@@ -116,11 +90,11 @@
             <div id="profile" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
                 <div class="bg-white py-2 collapse-inner rounded">
                     <a class="collapse-item" href="{{ url('/profile') }}">
-                        <i class="fas fa-fw fa-cog"></i>
+                        <img src="{{ (asset('assets/images/logo/profile.svg')) }}" width="30" height="20" alt="" srcset="">
                         <span class="ml-1">Profile</span>
                     </a>
                     <a class="collapse-item" href="#" data-toggle="modal" data-target="#logoutModal">
-                        <i class="fas fa-fw fa-sign-out-alt"></i>
+                        <img src="{{ (asset('assets/images/logo/logout.svg')) }}" width="30" height="20" alt="" srcset="">
                         <span class="ml-1">Logout</span>
                     </a>
                 </div>

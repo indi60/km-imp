@@ -4,6 +4,8 @@
     @section('title', 'Admin | Edit Profile')
 @elseif (auth()->user()->role_id == "2")
     @section('title', 'Member | Edit Profile')
+@else
+    @section('title', 'Guest | Edit Profile')
 @endif
 
 @section('container')
@@ -15,14 +17,14 @@
         </div>
 
         <div class="card-body">
-            <form class=" form-signin" action="/profile/{{ $UserProfiles->id }}" method="POST">
+            <form class=" form-signin" action="/profile/{{ $userProfiles->id }}" method="POST">
                 @method('put')
                 @csrf
 
                 <div class="form-group">
                     <label for="name">Nama Lengkap</label>
                     <input type="text" class="form-control @error('name') is-invalid @enderror" id="name"
-                        placeholder="Masukan Nama Lengkap" name="name" value="{{ $UserProfiles->name }}">
+                        placeholder="Masukan Nama Lengkap" name="name" value="{{ $userProfiles->name }}">
                     @error('name')
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
@@ -31,7 +33,7 @@
                 <div class="form-group">
                     <label for="jenis_kelamin">Jenis Kelamin</label>
                     <br>
-                    @if ($UserProfiles->jenis_kelamin === "Laki-laki")
+                    @if ($userProfiles->jenis_kelamin === "Laki-laki")
                         <div class="custom-control custom-radio custom-control-inline">
                             <input type="radio" id="Laki-laki" name="jenis_kelamin" class="custom-control-input"
                                 value="Laki-laki" checked>
@@ -45,7 +47,7 @@
                         @error('jenis_kelamin')
                             <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
-                    @elseif ($UserProfiles->jenis_kelamin === "Perempuan")
+                    @elseif ($userProfiles->jenis_kelamin === "Perempuan")
                         <div class="custom-control custom-radio custom-control-inline">
                             <input type="radio" id="Laki-laki" name="jenis_kelamin" class="custom-control-input"
                                 value="Laki-laki">
@@ -70,12 +72,12 @@
                         <select class="custom-select form-control @error('job_id') is-invalid @enderror" id="job_id"
                             placeholder="Masukan Job" name="job_id" value="{{ old('job_id') }}">
                             <option value="" selected>Pilih Job</option>
-                            @foreach($Jobs as $Job)
-                                <option value="{{ $Job->id }}"
-                                    @if ($Job->id === $UserProfiles->job_id)
+                            @foreach($jobs as $job)
+                                <option value="{{ $job->id }}"
+                                    @if ($job->id === $userProfiles->job_id)
                                         selected
                                     @endif>
-                                    {{ $Job->name }}
+                                    {{ $job->name }}
                                 </option>
                             @endforeach
                         </select>
@@ -88,7 +90,7 @@
                 <div class="form-group">
                     <label for="no_hp">Nomor HP</label>
                     <input type="tel" class="form-control @error('no_hp') is-invalid @enderror" id="no_hp"
-                        placeholder="+62-555-5555-5555" name="no_hp" value="{{ $UserProfiles->no_hp }}">
+                        placeholder="+62-555-5555-5555" name="no_hp" value="{{ $userProfiles->no_hp }}">
                     @error('no_hp')
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
@@ -96,7 +98,7 @@
 
                 <div class="form-group">
                     <label for="alamat">Alamat</label>
-                    <textarea class="form-control" name="alamat" rows="4" id="alamat">{{ $UserProfiles->alamat }}</textarea>
+                    <textarea class="form-control" name="alamat" rows="4" id="alamat">{{ $userProfiles->alamat }}</textarea>
                     @error('alamat')
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror

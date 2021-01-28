@@ -17,12 +17,12 @@ class Article extends Model
         'status_article_id'
     ];
 
-    public function Job()
+    public function job()
     {
         return $this->hasMany('App\Job', 'id', 'job_id');
     }
 
-    public function StatusArticle()
+    public function status_article()
     {
         return $this->hasMany('App\StatusArticle', 'id', 'status_article_id');
     }

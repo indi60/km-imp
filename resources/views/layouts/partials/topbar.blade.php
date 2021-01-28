@@ -35,19 +35,6 @@
                     <i class="fa fa-bars"></i>
                 </button>
 
-                <!-- Topbar Search -->
-                {{-- <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
-                    <div class="input-group">
-                        <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..."
-                            aria-label="Search" aria-describedby="basic-addon2">
-                        <div class="input-group-append">
-                            <button class="btn btn-primary" type="button">
-                                <i class="fas fa-search fa-sm"></i>
-                            </button>
-                        </div>
-                    </div>
-                </form> --}}
-
                 <h1 class="text-lg-left mt-3 text-white"><strong>Welcome Back <br>{{ Auth::user()->name }}!</strong>
                 </h1>
                 <p class="text-lg-left mt-3 text-white">
@@ -69,7 +56,7 @@
                             </div>
                             <div class="col-auto">
                                 <div class="h5 mb-0 font-weight-bold" style="font-size: 40px; color: black">
-                                    {{ $count_total_project }}
+                                    {{ $countTotalProject }}
                                 </div>
                                 <div class="h6 mb-0 font-weight-bold" style="color: black">Projects</div>
                             </div>
@@ -88,7 +75,7 @@
                             </div>
                             <div class="col-auto">
                                 <div class="h5 mb-0 font-weight-bold" style="font-size: 40px; color: black">
-                                    {{ $count_total_tiket }}
+                                    {{ $countTotalTicket }}
                                 </div>
                                 <div class="h6 mb-0 font-weight-bold" style="color: black">Issues</div>
                             </div>

@@ -45,37 +45,37 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public function Role()
+    public function role()
     {
         return $this->hasMany('App\Role', 'id', 'role_id');
     }
 
-    public function Job()
+    public function job()
     {
         return $this->hasMany('App\Job', 'id', 'job_id');
     }
 
-    public function Ticket()
+    public function ticket()
     {
         return $this->belongsTo('App\Ticket');
     }
 
-    public function ProjectAssigned()
+    public function project_assigned()
     {
         return $this->hasMany('App\ProjectAssigned', 'assigned_to_user');
     }
 
-    public function Project()
+    public function project()
     {
         return $this->hasMany('App\Project', 'assigned_to_user');
     }
 
-    public function Comment()
+    public function comment()
     {
         return $this->belongsTo('App\Comment');
     }
 
-    public function CommentReply()
+    public function comment_reply()
     {
         return $this->belongsTo('App\CommentReply');
     }

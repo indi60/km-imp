@@ -19,10 +19,10 @@ class IssueController extends Controller
      */
     public function index()
     {
-        $count_total_project = Project::all()->count();
-        $count_total_tiket = Ticket::all()->count();
-        $Tickets = Ticket::where('role_id', '3')->get();
-        return view('admin.issue.index', compact('Tickets','count_total_project', 'count_total_tiket'));
+        $countTotalProject = Project::all()->count();
+        $countTotalTicket = Ticket::all()->count();
+        $tickets = Ticket::where('role_id', null)->get();
+        return view('admin.issue.index', compact('tickets', 'countTotalProject', 'countTotalTicket'));
     }
 
     /**
@@ -43,7 +43,21 @@ class IssueController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'project_id' => 'required',
+            'title' => 'required',
+            'content' => 'required',
+            'author_name' => 'required',
+            'author_email' => 'required',
+        ]);
+        Ticket::create([
+            'project_id' => $request->project_id,
+            'title' => $request->title,
+            'content' => $request->content,
+            'author_name' => $request->author_name,
+            'author_email' => $request->author_email,
+        ]);
+        return redirect('/');
     }
 
     /**
@@ -65,14 +79,14 @@ class IssueController extends Controller
      */
     public function edit($id)
     {
-        $count_total_project = Project::all()->count();
-        $count_total_tiket = Ticket::all()->count();
-        $Tickets = Ticket::find($id);
-        $Projects = Project::all();
-        $Users = User::all();
-        $Statuses = Status::all();
-        $Priorities = Priority::all();
-        return view('admin.issue.edit', compact('Tickets', 'Projects', 'Users', 'Statuses', 'Priorities', 'count_total_project', 'count_total_tiket'));
+        $countTotalProject = Project::all()->count();
+        $countTotalTicket = Ticket::all()->count();
+        $tickets = Ticket::find($id);
+        $projects = Project::all();
+        $users = User::all();
+        $statuses = Status::all();
+        $priorities = Priority::all();
+        return view('admin.issue.edit', compact('tickets', 'projects', 'users', 'statuses', 'priorities', 'countTotalProject', 'countTotalTicket'));
     }
 
     /**
@@ -84,21 +98,17 @@ class IssueController extends Controller
      */
     public function update(Request $request, $id)
     {
-        // get id project
-        $idProject = session('findIdProjects');
-
         $request->validate([
-            'project_id' => 'required',
             'assigned_to_user' => 'required',
             'priority_id' => 'required',
         ]);
 
-        $Tickets = Ticket::find($id);
-        $Tickets->role_id = 2;
-        $Tickets->project_id = $request->project_id;
-        $Tickets->assigned_to_user = $request->assigned_to_user;
-        $Tickets->priority_id = $request->priority_id;
-        $Tickets->update();
+        $tickets = Ticket::find($id);
+        $tickets->status_id = 1;
+        $tickets->role_id = 2;
+        $tickets->assigned_to_user = $request->assigned_to_user;
+        $tickets->priority_id = $request->priority_id;
+        $tickets->update();
         return redirect('/issue')->with('status', 'Data ' . $request->title . ' Berhasil Diubah!');
     }
 
@@ -110,6 +120,8 @@ class IssueController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $tickets = Ticket::find($id);
+        $tickets->delete();
+        return redirect('/issue')->with('statusDelete', 'Data Berhasil Dihapus!');
     }
 }

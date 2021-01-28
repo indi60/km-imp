@@ -11,7 +11,7 @@
         </div>
 
         <div class="card-body">
-            <form class=" form-signin" action="/issue/{{ $Tickets->id }}" method="POST">
+            <form class=" form-signin" action="/issue/{{ $tickets->id }}" method="POST">
                 @method('put')
                 @csrf
 
@@ -24,15 +24,15 @@
                     <div class="input-group mb-3">
                         <select class="custom-select form-control @error('project_id') is-invalid @enderror"
                             id="project_id" name="project_id"
-                            value="{{ old('project_id') }}">
+                            value="{{ old('project_id') }}" disabled style="cursor: not-allowed">
                             <option value="0" selected>Pilih Project</option>
-                            @foreach($Projects as $Project)
-                                <option value="{{ $Project->id }}"
-                                    @if ($Project->id === $Tickets->project_id)
+                            @foreach($projects as $project)
+                                <option value="{{ $project->id }}"
+                                    @if ($project->id === $tickets->project_id)
                                         selected
                                     @endif>
-                                    {{ $Project->name }} :
-                                    @foreach ($Project->CategoryProject as $items)
+                                    {{ $project->name }} :
+                                    @foreach ($project->category_project as $items)
                                         {{ $items->name }}
                                     @endforeach
                                 </option>
@@ -51,12 +51,12 @@
                             id="assigned_to_user" name="assigned_to_user"
                             value="{{ old('assigned_to_user') }}">
                             <option value="0" selected>Pilih User yang di Assign</option>
-                            @foreach($Users as $User)
-                                <option value="{{ $User->id }}"
-                                    @if ($User->id === $Tickets->assigned_to_user)
+                            @foreach($users as $user)
+                                <option value="{{ $user->id }}"
+                                    @if ($user->id === $tickets->assigned_to_user)
                                         selected
                                     @endif>
-                                    {{ $User->name }}
+                                    {{ $user->name }}
                                 </option>
                             @endforeach
                         </select>
@@ -73,12 +73,12 @@
                             id="priority_id" name="priority_id"
                             value="{{ old('priority_id') }}">
                             <option value="0" selected>Pilih Priority</option>
-                            @foreach($Priorities as $Priority)
-                                <option value="{{ $Priority->id }}"
-                                    @if ($Priority->id === $Tickets->priority_id)
+                            @foreach($priorities as $priority)
+                                <option value="{{ $priority->id }}"
+                                    @if ($priority->id === $tickets->priority_id)
                                         selected
                                     @endif>
-                                    {{ $Priority->name }}
+                                    {{ $priority->name }}
                                 </option>
                             @endforeach
                         </select>

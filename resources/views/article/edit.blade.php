@@ -6,6 +6,10 @@
     @section('title', 'Member | Data Tiket')
 @endif
 
+@section('css')
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/css/bootstrap-select.min.css">
+@endsection
+
 @section('container')
 <!-- Begin Page Content -->
 <div class="container-fluid">
@@ -15,7 +19,7 @@
         </div>
 
         <div class="card-body">
-            <form class=" form-signin" action="/article/{{ $Articles->id }}" method="POST">
+            <form class=" form-signin" action="/article/{{ $articles->id }}" method="POST">
                 @method('put')
                 @csrf
 
@@ -26,15 +30,15 @@
                 <div class="form-group">
                     <label for="status_article_id">Status</label>
                     <div class="input-group mb-3">
-                        <select class="custom-select form-control @error('status_article_id') is-invalid @enderror" id="status_article_id"
+                        <select class="custom-select selectpicker form-control @error('status_article_id') is-invalid @enderror" id="status_article_id"
                             placeholder="Masukan Job" name="status_article_id" value="{{ old('status_article_id') }}">
-                            <option value="0" selected>Pilih Status</option>
-                            @foreach($StatusArticles as $StatusArticle)
-                                <option value="{{ $StatusArticle->id }}"
-                                    @if ($StatusArticle->id === $Articles->status_article_id)
+                            <option value="0" selected disabled>Pilih Status</option>
+                            @foreach($statusArticles as $statusArticle)
+                                <option value="{{ $statusArticle->id }}"
+                                    @if ($statusArticle->id === $articles->status_article_id)
                                         selected
                                     @endif>
-                                    {{ $StatusArticle->name }}
+                                    {{ $statusArticle->name }}
                                 </option>
                             @endforeach
                         </select>
@@ -47,15 +51,15 @@
                 <div class="form-group">
                     <label for="job_id">Kategori Artikel</label>
                     <div class="input-group mb-3">
-                        <select class="custom-select form-control @error('job_id') is-invalid @enderror" id="job_id"
-                            placeholder="Masukan Kategori Artikel" name="job_id" value="{{ $Articles->job_id }}">
-                            <option value="0" selected>Pilih Kategori Artikel</option>
-                            @foreach($Jobs as $Job)
-                                <option value="{{ $Job->id }}"
-                                    @if ($Job->id === $Articles->job_id)
+                        <select class="custom-select selectpicker form-control @error('job_id') is-invalid @enderror" id="job_id"
+                            placeholder="Masukan Kategori Artikel" name="job_id" value="{{ $articles->job_id }}" data-live-search="true">
+                            <option value="0" selected disabled>Pilih Kategori Artikel</option>
+                            @foreach($jobs as $job)
+                                <option value="{{ $job->id }}"
+                                    @if ($job->id === $articles->job_id)
                                         selected
                                     @endif>
-                                    {{ $Job->name }}
+                                    {{ $job->name }}
                                 </option>
                             @endforeach
                         </select>
@@ -68,7 +72,7 @@
                 <div class="form-group">
                     <label for="title">Judul Artikel</label>
                     <input type="text" class="form-control @error('title') is-invalid @enderror" id="title"
-                        placeholder="Masukan Judul Tiket" name="title" value="{{ $Articles->title }}">
+                        placeholder="Masukan Judul Tiket" name="title" value="{{ $articles->title }}">
                     @error('title')
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
@@ -76,7 +80,7 @@
 
                 <div class="form-group">
                     <label for="content">Content</label>
-                    <textarea class="form-control" name="content" id="content-article">{{ $Articles->content }}</textarea>
+                    <textarea class="form-control" name="content" id="content-article">{{ $articles->content }}</textarea>
                     @error('content')
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
@@ -95,15 +99,20 @@
     </a>
 </div>
 <!-- container-fluid -->
-
-@section('js')
-    <script src="https://cdn.ckeditor.com/4.12.1/full/ckeditor.js"></script>
-    <script type="text/javascript">
-        CKEDITOR.replace('content-article', {
-            filebrowserUploadUrl: "{{ route('upload.upload', ['_token' => csrf_token() ])}}",
-            filebrowserUploadMethod: 'form',
-        });
-    </script>
 @endsection
 
+@section('js')
+<script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/bootstrap-select.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $('select').selectpicker();
+    });
+</script>
+<script src="https://cdn.ckeditor.com/4.12.1/full/ckeditor.js"></script>
+<script type="text/javascript">
+    CKEDITOR.replace('content-article', {
+        filebrowserUploadUrl: "{{ route('upload.upload', ['_token' => csrf_token() ])}}",
+        filebrowserUploadMethod: 'form',
+    });
+</script>
 @endsection

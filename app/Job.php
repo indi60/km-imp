@@ -12,12 +12,12 @@ class Job extends Model
         'about'
     ];
 
-    public function User()
+    public function user()
     {
         return $this->belongsTo('App\User');
     }
 
-    public function Article()
+    public function article()
     {
         return $this->belongsTo('App\Article');
     }

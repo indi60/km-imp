@@ -6,6 +6,10 @@
     @section('title', 'Member | Tambah Data Artikel')
 @endif
 
+@section('css')
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/css/bootstrap-select.min.css">
+@endsection
+
 @section('container')
 <!-- Begin Page Content -->
 <div class="container-fluid">
@@ -25,12 +29,12 @@
                 <div class="form-group">
                     <label for="status_article_id">Status</label>
                     <div class="input-group mb-3">
-                        <select class="custom-select form-control @error('status_article_id') is-invalid @enderror" id="status_article_id"
+                        <select class="custom-select selectpicker form-control @error('status_article_id') is-invalid @enderror" id="status_article_id"
                             placeholder="Masukan Job" name="status_article_id" value="{{ old('status_article_id') }}">
-                            <option value="0" selected>Pilih Status</option>
-                            @foreach($StatusArticles as $StatusArticle)
-                                <option value="{{ $StatusArticle->id }}">
-                                    {{ $StatusArticle->name }}
+                            <option value="0" selected disabled>Pilih Status</option>
+                            @foreach($statusArticles as $statusArticle)
+                                <option value="{{ $statusArticle->id }}">
+                                    {{ $statusArticle->name }}
                                 </option>
                             @endforeach
                         </select>
@@ -43,12 +47,12 @@
                 <div class="form-group">
                     <label for="job_id">Kategori Artikel</label>
                     <div class="input-group mb-3">
-                        <select class="custom-select form-control @error('job_id') is-invalid @enderror" id="job_id"
-                            placeholder="Masukan Kategori Artikel" name="job_id" value="{{ old('job_id') }}">
-                            <option value="0" selected>Pilih Kategori Artikel</option>
-                            @foreach($Jobs as $Job)
-                                <option value="{{ $Job->id }}">
-                                    {{ $Job->name }}
+                        <select class="custom-select selectpicker form-control @error('job_id') is-invalid @enderror" id="job_id"
+                            placeholder="Masukan Kategori Artikel" name="job_id" value="{{ old('job_id') }}" data-live-search="true">
+                            <option value="0" selected disabled>Pilih Kategori Artikel</option>
+                            @foreach($jobs as $job)
+                                <option value="{{ $job->id }}">
+                                    {{ $job->name }}
                                 </option>
                             @endforeach
                         </select>
@@ -88,15 +92,20 @@
     </a>
 </div>
 <!-- container-fluid -->
-
-@section('js')
-    <script src="https://cdn.ckeditor.com/4.12.1/full/ckeditor.js"></script>
-    <script type="text/javascript">
-        CKEDITOR.replace('content-article', {
-            filebrowserUploadUrl: "{{ route('upload.upload', ['_token' => csrf_token() ])}}",
-            filebrowserUploadMethod: 'form',
-        });
-    </script>
 @endsection
 
+@section('js')
+<script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/bootstrap-select.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $('select').selectpicker();
+    });
+</script>
+<script src="https://cdn.ckeditor.com/4.12.1/full/ckeditor.js"></script>
+<script type="text/javascript">
+    CKEDITOR.replace('content-article', {
+        filebrowserUploadUrl: "{{ route('upload.upload', ['_token' => csrf_token() ])}}",
+        filebrowserUploadMethod: 'form',
+    });
+</script>
 @endsection

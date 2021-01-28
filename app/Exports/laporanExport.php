@@ -10,7 +10,7 @@ class laporanExport implements FromView
 {
     public function view(): View
     {
-        $Tickets = Ticket::all();
-        return view('admin.previewlaporan', compact('Tickets'));
+        $tickets = Ticket::all();
+        return view('admin.previewlaporan', compact('tickets'));
     }
 }

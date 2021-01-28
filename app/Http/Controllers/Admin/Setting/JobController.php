@@ -27,9 +27,9 @@ class JobController extends Controller
      */
     public function create()
     {
-        $count_total_project = Project::all()->count();
-        $count_total_tiket = Ticket::all()->count();
-        return view('admin.setting.job.create', compact('count_total_project', 'count_total_tiket'));
+        $countTotalProject = Project::all()->count();
+        $countTotalTicket = Ticket::all()->count();
+        return view('admin.setting.job.create', compact('countTotalProject', 'countTotalTicket'));
     }
 
     /**
@@ -66,10 +66,10 @@ class JobController extends Controller
      */
     public function edit($id)
     {
-        $count_total_project = Project::all()->count();
-        $count_total_tiket = Ticket::all()->count();
-        $Jobs = Job::find($id);
-        return view('admin.setting.job.edit', compact('Jobs', 'count_total_project', 'count_total_tiket'));
+        $countTotalProject = Project::all()->count();
+        $countTotalTicket = Ticket::all()->count();
+        $jobs = Job::find($id);
+        return view('admin.setting.job.edit', compact('jobs', 'countTotalProject', 'countTotalTicket'));
     }
 
     /**
@@ -85,9 +85,9 @@ class JobController extends Controller
             'name' => 'required',
         ]);
 
-        $Jobs = Job::find($id);
-        $Jobs->name = $request->name;
-        $Jobs->update();
+        $jobs = Job::find($id);
+        $jobs->name = $request->name;
+        $jobs->update();
         return redirect('/setting')->with('status', 'Data ' . $request->name . ' Berhasil Diubah!');
     }
 
@@ -99,8 +99,8 @@ class JobController extends Controller
      */
     public function destroy($id)
     {
-        $Jobs = Job::find($id);
-        $Jobs->delete();
+        $jobs = Job::find($id);
+        $jobs->delete();
         return redirect('/setting')->with('statusDelete', 'Data Berhasil Dihapus!');
     }
 }

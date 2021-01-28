@@ -15,17 +15,17 @@ class Comment extends Model
         'comment_text',
     ];
 
-    public function User()
+    public function user()
     {
         return $this->hasMany('App\User', 'id', 'user_id');
     }
 
-    public function Ticket()
+    public function ticket()
     {
         return $this->belongsTo('App\Ticket');
     }
 
-    public function CommentReply()
+    public function comment_reply()
     {
         return $this->hasMany('App\CommentReply');
     }

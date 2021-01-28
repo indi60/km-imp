@@ -1,16 +1,16 @@
 @extends('layouts/main')
 
 @if(auth()->user()->role_id == "1")
-    @section('title', 'Admin | Detail Tiket')
+@section('title', 'Admin | Detail Tiket')
 @elseif(auth()->user()->role_id == "2")
-    @section('title', 'Member | Detail Tiket')
+@section('title', 'Member | Detail Tiket')
 @endif
 
 @section('container')
 <!-- Begin Page Content -->
 <div class="container-fluid">
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-        <h4 class="h4 mb-0 text-gray-800">{{ $Tickets->title }}</h4>
+        <h4 class="h4 mb-0 text-gray-800">{{ $tickets->title }}</h4>
     </div>
     <hr>
     <div class="row">
@@ -19,28 +19,27 @@
                 <div class="card-header py-3">
                     <p class="card-title" style="margin-bottom: -5px">
                         <span>
-                            @foreach($Tickets->Status as $item)
-                                @if($item->name === "Open")
-                                    <span class="badge badge-pill badge-success">
-                                        <i class="fas fa-exclamation-circle"></i><span
-                                            class="ml-1">{{ $item->name }}</span>
-                                    </span>
-                                @else
-                                    <span class="badge badge-pill badge-danger">
-                                        <i class="fas fa-check-circle"></i><span class="ml-1">{{ $item->name }}</span>
-                                    </span>
-                                @endif
+                            @foreach($tickets->status as $item)
+                            @if($item->name === "Open")
+                            <span class="badge badge-pill badge-success">
+                                <i class="fas fa-exclamation-circle"></i><span class="ml-1">{{ $item->name }}</span>
+                            </span>
+                            @else
+                            <span class="badge badge-pill badge-danger">
+                                <i class="fas fa-check-circle"></i><span class="ml-1">{{ $item->name }}</span>
+                            </span>
+                            @endif
                             @endforeach
                         </span>
-                        <b>{{ $Tickets->author_name }}</b>,
+                        <b>{{ $tickets->author_name }}</b>,
                         <span>
-                            created this issue {{ $Tickets->created_at->diffForHumans() }}
+                            created this issue {{ $tickets->created_at->diffForHumans() }}
                         </span>
                     </p>
                 </div>
 
                 <div class="card-body">
-                    {!! $Tickets->content !!}
+                    {!! $tickets->content !!}
                 </div>
             </div>
         </div>
@@ -51,7 +50,7 @@
             <div class="card shadow mb-4">
                 <div class="card-header py-3">
                     <p class="card-title float-right" style="margin-bottom: -5px"><i class="fas fa-comment mr-1"></i>
-                        {{ $Comments->count() }} Comments
+                        {{ $comments->count() }} Comments
                     </p>
                 </div>
 
@@ -59,132 +58,123 @@
                     <section class="comment-sec-area pt-80 pb-80">
                         <div class="container">
                             <div class="row flex-column">
-                                @foreach($Tickets->Comment as $Commentar)
-                                    <div class="comment">
-                                        <div class="comment-list">
+                                @foreach($tickets->comment as $commentar)
+                                <div class="comment">
+                                    <div class="comment-list">
+                                        <div class="justify-content-between d-flex">
                                             <div class="justify-content-between d-flex">
-                                                <div class="justify-content-between d-flex">
-                                                    @foreach($Commentar->User as $Users)
-                                                        <div class="avatar">
-                                                            <img src="{{ asset('storage/photos/upload/avatar/'.$Users->avatar) }}"
-                                                                alt="{{ $Users->avatar }}" width="50px"
-                                                                class="rounded-circle">
-                                                        </div>
-                                                    @endforeach
-                                                    <div>
-                                                        <p class="ml-3">
-                                                            <strong class="text-primary"><a
-                                                                    href="mailto:{{ $Commentar->author_email }}"
-                                                                    class="text-decoration-none">{{ $Commentar->author_name }}</a></strong><span
-                                                                class="meta">
-                                                                {{ $Commentar->created_at->format('D, d M Y H:i') }}</span>
-                                                            <a class="text-primary"
-                                                                onclick="showReplyForm('{{ $Commentar->id }}','{{ $Commentar->author_name }}')"
-                                                                style="cursor:pointer"> - Reply </a>
-                                                            <br>
-                                                            <div class="ml-3">
-                                                                {!! $Commentar->comment_text !!}
-                                                            </div>
-                                                        </p>
-                                                    </div>
+                                                @foreach($commentar->user as $users)
+                                                <div class="avatar">
+                                                    <img src="{{ asset('storage/photos/upload/avatar/'.$users->avatar) }}"
+                                                        alt="{{ $users->avatar }}" width="50px" class="rounded-circle">
                                                 </div>
-                                            </div>
-                                        </div>
-                                        @if($Commentar->CommentReply->count() > 0)
-                                            @foreach($Commentar->CommentReply as $ReplyComments)
-                                                <div class="comment-list">
-                                                    <div class="justify-content-between d-flex"
-                                                        style="margin-left: 60px">
-                                                        <div class="justify-content-between d-flex">
-                                                            @foreach($ReplyComments->User as $Users)
-                                                                <div class="avatar">
-                                                                    <img src="{{ asset('storage/photos/upload/avatar/'.$Users->avatar) }}"
-                                                                        alt="{{ $Users->avatar }}" width="50px"
-                                                                        class="rounded-circle">
-                                                                </div>
-                                                            @endforeach
-                                                            <div>
-                                                                <h5>
-                                                                    <a href="mailto:{{ $ReplyComments->author_email }}"
-                                                                        style="text-decoration: none"
-                                                                        class="ml-3">{{ $ReplyComments->author_name }}
-                                                                    </a>
-                                                                </h5>
-                                                                <p class="ml-3">
-                                                                    {{ $ReplyComments->created_at->format('D, d M Y H:i') }}
-                                                                </p>
-                                                                <p class="ml-3">
-                                                                    {!! $ReplyComments->comment_reply_text !!}
-                                                                    <a class="text-primary ml-2" style="cursor:pointer"
-                                                                        onclick="showReplyForm('{{ $Commentar->id }}','{{ $ReplyComments->author_name }}')">
-                                                                        Reply
-                                                                    </a>
-                                                                </p>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            @endforeach
-                                        @else
-                                        @endif
-                                        <div class="comment-list" id="reply-form-{{ $Commentar->id }}"
-                                            style="display: none; margin-left: 60px">
-                                            <div class="justify-content-between d-flex">
-                                                <div class="justify-content-between d-flex">
-                                                    <div class="avatar">
-                                                        <img src="{{ asset('storage/photos/upload/avatar/'. Auth::user()->avatar) }}"
-                                                            alt="{{ Auth::user()->avatar }}" width="50px"
-                                                            class="rounded-circle">
-                                                    </div>
-                                                    <div>
-                                                        <h5 class="ml-3">
-                                                            <a href="#" style="text-decoration: none">
-                                                                {{ Auth::user()->name }}
+                                                @endforeach
+                                                <div class="container-fluid">
+                                                    <p>
+                                                        <strong class="text-primary">
+                                                            <a href="mailto:{{ $commentar->author_email }}"
+                                                                class="text-decoration-none">{{ $commentar->author_name }}
                                                             </a>
-                                                        </h5>
-                                                        <p class="ml-3">
-                                                            {{ date('D, d M Y H:i') }}
-                                                        </p>
-
-                                                        <div class="row flex-row d-flex">
-                                                            <form action="/comment-reply" method="post"
-                                                                id="reply-form-{{ $Commentar->id }}"
-                                                                style="margin-left: 30px;">
-                                                                @csrf
-
-                                                                <input type="hidden" name="user_id" id="user_id"
-                                                                    value="{{ Auth::user()->id }}">
-                                                                <input type="hidden" name="author_name" id="author_name"
-                                                                    value="{{ Auth::user()->name }}">
-                                                                <input type="hidden" name="author_email"
-                                                                    id="author_email"
-                                                                    value="{{ Auth::user()->email }}">
-
-                                                                <input type="hidden" name="comment_id" id="comment_id"
-                                                                    value="{{ $Commentar->id }}">
-
-                                                                <div class="form-group">
-                                                                    <label for="">Reply a comment</label>
-                                                                    <textarea
-                                                                        id="reply-form-{{ $Commentar->id }}-text"
-                                                                        name="comment_reply_text" rows="4"
-                                                                        class="form-control" style="width: 800px"
-                                                                        onfocus="this.placeholder = ''"
-                                                                        onblur="this.placeholder = 'Reply message'">
-                                                                    </textarea>
-                                                                </div>
-                                                                <button class="btn btn-primary btn-sm">
-                                                                    Reply Comment
-                                                                </button>
-                                                            </form>
-                                                            <hr>
-                                                        </div>
+                                                        </strong>
+                                                        <span
+                                                            class="meta">{{ $commentar->created_at->format('D, d M Y H:i') }}</span>
+                                                        <a class="text-primary"
+                                                            onclick="showReplyForm('{{ $commentar->id }}','{{ $commentar->author_name }}')"
+                                                            style="cursor:pointer"> - Reply
+                                                        </a>
+                                                    </p>
+                                                    <div>
+                                                        {!! $commentar->comment_text !!}
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-                                        <hr>
                                     </div>
+                                    @if($commentar->comment_reply->count() > 0)
+                                    @foreach($commentar->comment_reply as $replyComments)
+                                    <div class="comment-list">
+                                        <div class="justify-content-between d-flex" style="margin-left: 60px">
+                                            <div class="justify-content-between d-flex">
+                                                @foreach($replyComments->user as $users)
+                                                <div class="avatar">
+                                                    <img src="{{ asset('storage/photos/upload/avatar/'.$users->avatar) }}"
+                                                        alt="{{ $users->avatar }}" width="50px" class="rounded-circle">
+                                                </div>
+                                                @endforeach
+                                                <div class="container-fluid">
+                                                    <p>
+                                                        <strong class="text-primary">
+                                                            <a href="mailto:{{ $replyComments->author_email }}"
+                                                                class="text-decoration-none">{{ $replyComments->author_name }}
+                                                            </a>
+                                                        </strong>
+                                                        <span
+                                                            class="meta">{{ $replyComments->created_at->format('D, d M Y H:i') }}</span>
+                                                        <a class="text-primary"
+                                                            onclick="showReplyForm('{{ $commentar->id }}','{{ $replyComments->author_name }}')"
+                                                            style="cursor:pointer"> - Reply Comment
+                                                        </a>
+                                                    </p>
+                                                    <div>
+                                                        {!! $replyComments->comment_reply_text !!}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    @endforeach
+                                    @endif
+                                    <div class="comment-list" id="reply-form-{{ $commentar->id }}"
+                                        style="display: none; margin-left: 60px">
+                                        <div class="justify-content-between d-flex">
+                                            <div class="justify-content-between d-flex">
+                                                <div class="avatar">
+                                                    <img src="{{ asset('storage/photos/upload/avatar/'. Auth::user()->avatar) }}"
+                                                        alt="{{ Auth::user()->avatar }}" width="50px"
+                                                        class="rounded-circle">
+                                                </div>
+                                                <div class="container-fluid">
+                                                    <p>
+                                                        <strong class="text-primary">
+                                                            <a href="mailto:{{ Auth::user()->email }}"
+                                                                class="text-decoration-none">{{ Auth::user()->name }}
+                                                            </a>
+                                                        </strong>
+                                                        <span class="meta">{{ date('D, d M Y H:i') }}</span>
+                                                    </p>
+                                                    <form action="/comment-reply" method="post"
+                                                        id="reply-form-{{ $commentar->id }}">
+                                                        @csrf
+
+                                                        <input type="hidden" name="user_id" id="user_id"
+                                                            value="{{ Auth::user()->id }}">
+                                                        <input type="hidden" name="author_name" id="author_name"
+                                                            value="{{ Auth::user()->name }}">
+                                                        <input type="hidden" name="author_email" id="author_email"
+                                                            value="{{ Auth::user()->email }}">
+
+                                                        <input type="hidden" name="comment_id" id="comment_id"
+                                                            value="{{ $commentar->id }}">
+
+                                                        <div class="form-group">
+                                                            <label for="">Reply a comment</label>
+                                                            <textarea id="reply-form-{{ $commentar->id }}-text"
+                                                                name="comment_reply_text" rows="4" class="form-control"
+                                                                style="width: 800px" onfocus="this.placeholder = ''"
+                                                                onblur="this.placeholder = 'Reply message'">
+                                                                </textarea>
+                                                        </div>
+                                                        <button class="btn btn-primary btn-sm">
+                                                            Reply Comment
+                                                        </button>
+                                                    </form>
+                                                    <hr>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <hr>
+                                </div>
                                 @endforeach
                             </div>
                         </div>
@@ -194,10 +184,9 @@
 
                         <input type="hidden" name="user_id" id="user_id" value="{{ Auth::user()->id }}">
                         <input type="hidden" name="author_name" id="author_name" value="{{ Auth::user()->name }}">
-                        <input type="hidden" name="author_email" id="author_email"
-                            value="{{ Auth::user()->email }}">
+                        <input type="hidden" name="author_email" id="author_email" value="{{ Auth::user()->email }}">
 
-                        <input type="hidden" name="ticket_id" id="ticket_id" value="{{ $Tickets->id }}">
+                        <input type="hidden" name="ticket_id" id="ticket_id" value="{{ $tickets->id }}">
 
                         <div class="form-group">
                             <label for="">Leave a comment</label>
@@ -206,8 +195,21 @@
                             </textarea>
                         </div>
                         <div class="float-right">
-                            <a class="btn btn-secondary btn-sm"><i class="fas fa-check-circle"></i><span class="ml-2">Close issue</span></a>
+                            @foreach ($tickets->status as $item)
+                            @if ($item->name === "Open")
+                            <a href="/ticket/{{$tickets->id}}/closed_ticket" class="btn btn-danger btn-sm">
+                                <i class="fas fa-check-circle text-white"></i>
+                                <span class="ml-2 text-white">Close issue</span>
+                            </a>
                             <button class="btn btn-primary btn-sm" id="comment-btn">Comment</button>
+                            @else
+                            <a href="/ticket/{{$tickets->id}}/reopen_ticket" class="btn btn-success btn-sm">
+                                <i class="fas fa-info-circle text-white"></i>
+                                <span class="ml-2 text-white">Reopen issue</span>
+                            </a>
+                            <button class="btn btn-primary btn-sm" id="comment-btn" disabled>Comment</button>
+                            @endif
+                            @endforeach
                         </div>
                     </form>
                 </div>
@@ -215,8 +217,7 @@
         </div>
     </div>
 
-    <a href="{{ url('/project/'.$idProject.'/ticket') }}"
-        class="text-danger float-right">
+    <a href="{{ url('/project/'.$idProject.'/ticket') }}" class="text-danger float-right">
         <i class="fas fa-arrow-left"><span class="ml-2">Back</span></i>
     </a>
 </div>
@@ -245,7 +246,6 @@
             x.style.display = "none";
         }
     }
-
 </script>
 @endsection
 

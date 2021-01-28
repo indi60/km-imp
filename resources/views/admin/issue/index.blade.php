@@ -13,22 +13,8 @@
         <h4 class="mb-0 font-weight-bold" style="color: black">Data Issue Customer</h4>
     </div>
 
-    <!-- Flash Data -->
-    @if(session('status'))
-        <div class="alert alert-success alert-dismissible fade show" role="alert">
-            {{ session('status') }}
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
-        </div>
-    @elseif(session('statusDelete'))
-        <div class="alert alert-danger alert-dismissible fade show" role="alert">
-            {{ session('statusDelete') }}
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
-        </div>
-    @endif
+    @include('includes/alert')
+
     <!-- DataTales Example -->
     <div class="card shadow mb-4">
 
@@ -38,36 +24,49 @@
                     <thead class="thead-dark">
                         <tr>
                             <th scope="col" class="text-center">Judul Issue</th>
+                            <th scope="col" class="text-center">Project</th>
                             <th scope="col" class="text-center">Action</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach($Tickets as $Ticket)
+                        @foreach($tickets as $ticket)
                             <tr>
                                 <td class="text-left">
-                                    <a href="/project/ticket/{{ $Ticket->id }}/show" style="text-decoration: none">
-                                        {{ $Ticket->title }}
+                                    <a href="/project/ticket/{{ $ticket->id }}/show" style="text-decoration: none">
+                                        {{ $ticket->title }}
                                     </a>
-                                    @foreach($Ticket->Priority as $item)
+                                    @foreach($ticket->priority as $item)
                                         <span class="badge badge-pill text-white"
                                             style="background-color: {{ $item->color }}">{{ $item->name }}</span>
                                     @endforeach
                                     <br>
                                     <p style="font-size: 14px">
-                                        #{{ $Ticket->id }}
-                                        @if($Ticket->status_id === 1)
+                                        #{{ $ticket->id }}
+                                        @if($ticket->status_id === 1)
                                             opened
                                         @else
                                             was closed
                                         @endif
-                                        {{ $Ticket->created_at->diffForHumans() }} by {{ $Ticket->author_name }}
+                                        {{ $ticket->created_at->diffForHumans() }} by {{ $ticket->author_name }}
                                     </p>
                                 </td>
                                 <td class="text-center">
-                                    <a href="/issue/{{ $Ticket->id }}/edit"
+                                    @foreach($ticket->project_has_many as $item)
+                                        <p>{{$item->name}}</p>
+                                    @endforeach
+                                </td>
+                                <td class="text-center">
+                                    <a href="/issue/{{ $ticket->id }}/edit"
                                         class="btn btn-small text-success">
                                         <i class="fa fa-check-circle"></i><span class="ml-2">Approve</span>
                                     </a>
+                                    <form action="issue/{{ $ticket->id }}" method="POST" class="d-inline">
+                                        @method('delete')
+                                        @csrf
+                                        <button type="submit" class="btn btn-small text-danger">
+                                            <i class=" fa fa-trash"></i><span class="ml-2">Delete</span>
+                                        </button>
+                                    </form>
                                 </td>
                             </tr>
                         @endforeach
@@ -76,9 +75,6 @@
             </div>
         </div>
     </div>
-    <a href="/project" class="text-danger float-right">
-        <i class="fas fa-arrow-left"><span class="ml-2">Back</span></i>
-    </a>
 </div>
 <!-- /.container-fluid -->
 @endsection

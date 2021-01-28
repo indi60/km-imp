@@ -11,7 +11,7 @@ class Role extends Model
         'name',
     ];
 
-    public function User()
+    public function user()
     {
         return $this->belongsTo('App\User');
     }

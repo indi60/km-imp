@@ -7,7 +7,7 @@
 @endif
 
 @section('css')
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/css/bootstrap-select.css" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/css/bootstrap-select.min.css">
 @endsection
 
 @section('container')
@@ -19,14 +19,14 @@
         </div>
 
         <div class="card-body">
-            <form class=" form-signin" action="/project/{{ $Projects->id }}" method="POST">
+            <form class=" form-signin" action="/project/{{ $projects->id }}" method="POST">
                 @method('put')
                 @csrf
 
                 <div class="form-group">
                     <label for="name">Nama Project</label>
                     <input type="text" class="form-control @error('name') is-invalid @enderror" id="name"
-                        placeholder="Masukan Nama Project" name="name" value="{{ $Projects->name }}">
+                        placeholder="Masukan Nama Project" name="name" value="{{ $projects->name }}">
                     @error('name')
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
@@ -37,13 +37,13 @@
                     <div class="input-group mb-3">
                         <select class="custom-select form-control @error('category_id') is-invalid @enderror"
                             id="category_id" placeholder="Masukan Kategori Project" name="category_id">
-                            <option value="0" selected>Pilih Kategori Project</option>
-                            @foreach ($CategoryProjects as $CategoryProject)
-                                <option value="{{$CategoryProject->id}}"
-                                    @if ($CategoryProject->id === $Projects->category_id)
+                            <option value="0" selected disabled>Pilih Kategori Project</option>
+                            @foreach ($categoryProjects as $categoryProject)
+                                <option value="{{$categoryProject->id}}"
+                                    @if ($categoryProject->id === $projects->category_id)
                                         selected
                                     @endif>
-                                    {{$CategoryProject->name}}
+                                    {{$categoryProject->name}}
                                 </option>
                             @endforeach
                         </select>
@@ -58,13 +58,13 @@
                     <div class="input-group mb-3">
                         <select class="custom-select form-control @error('status_article_id') is-invalid @enderror" id="status_article_id"
                             placeholder="Masukan Status" name="status_article_id" value="{{ old('status_article_id') }}">
-                            <option value="0" selected>Pilih Status</option>
-                            @foreach($StatusArticles as $StatusArticle)
-                                <option value="{{ $StatusArticle->id }}"
-                                    @if ($StatusArticle->id === $Projects->status_article_id)
+                            <option value="0" selected disabled>Pilih Status</option>
+                            @foreach($statusArticles as $statusArticle)
+                                <option value="{{ $statusArticle->id }}"
+                                    @if ($statusArticle->id === $projects->status_article_id)
                                         selected
                                     @endif>
-                                    {{ $StatusArticle->name }}
+                                    {{ $statusArticle->name }}
                                 </option>
                             @endforeach
                         </select>
@@ -78,16 +78,16 @@
                     <label for="assigned_to_user">Assigned To</label>
                     <div class="input-group mb-3">
                         <select class="custom-select selectpicker form-control @error('assigned_to_user') is-invalid @enderror"
-                            multiple data-live-search="true" id="assigned_to_user" name="assigned_to_user[]"
+                            id="assigned_to_user" name="assigned_to_user[]" multiple data-live-search="true"
                             value="{{ old('assigned_to_user') }}">
-                            @foreach($Users as $User)
-                                <option value="{{ $User->id }}"
-                                    @foreach($Projects->ProjectAssigned as $item)
-                                        @if ($User->id === $item->AssignedTo->id)
+                            @foreach($users as $user)
+                                <option value="{{ $user->id }}"
+                                    @foreach($projects->project_assigned as $item)
+                                        @if ($user->id === $item->assigned_to->id)
                                             selected
                                         @endif
                                     @endforeach>
-                                    {{ $User->name }}
+                                    {{ $user->name }}
                                 </option>
                             @endforeach
                         </select>
@@ -113,7 +113,7 @@
 @endsection
 
 @section('js')
-<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/js/bootstrap-select.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/bootstrap-select.min.js"></script>
 <script>
     $(document).ready(function() {
         $('select').selectpicker();

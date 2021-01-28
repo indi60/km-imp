@@ -12,13 +12,13 @@ class StatusArticle extends Model
         'color',
     ];
 
-    public function Article()
+    public function article()
     {
         return $this->belongsTo('App\Article');
     }
 
-    public function Peoject()
+    public function project()
     {
-        return $this->belongsTo('App\Peoject');
+        return $this->belongsTo('App\project');
     }
 }

@@ -20,32 +20,37 @@ class Ticket extends Model
         'priority_id',
     ];
 
-    public function User()
+    public function user()
     {
         return $this->hasMany('App\User', 'id', 'user_id');
     }
 
-    public function AssignedTo()
+    public function assigned_to()
     {
         return $this->hasMany('App\User', 'id', 'assigned_to_user');
     }
 
-    public function Project()
+    public function project()
     {
         return $this->belongsTo('App\Project');
     }
 
-    public function Status()
+    public function project_has_many()
+    {
+        return $this->hasMany('App\Project', 'id', 'project_id');
+    }
+
+    public function status()
     {
         return $this->hasMany('App\Status', 'id', 'status_id');
     }
 
-    public function Priority()
+    public function priority()
     {
         return $this->hasMany('App\Priority', 'id', 'priority_id');
     }
 
-    public function Comment()
+    public function comment()
     {
         return $this->hasMany('App\Comment');
     }

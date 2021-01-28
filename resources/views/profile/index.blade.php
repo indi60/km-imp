@@ -4,28 +4,15 @@
     @section('title', 'Admin | Profile')
 @elseif(auth()->user()->role_id == "2")
     @section('title', 'Member | Profile')
+@else
+    @section('title', 'Guest | Profile')
 @endif
 
 @section('container')
 <!-- Begin Page Content -->
 <div class="container-fluid">
 
-    <!-- Flash Data -->
-    @if(session('status'))
-        <div class="alert alert-success alert-dismissible fade show" role="alert">
-            {{ session('status') }}
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
-        </div>
-    @elseif(session('statusDelete'))
-        <div class="alert alert-danger alert-dismissible fade show" role="alert">
-            {{ session('statusDelete') }}
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
-        </div>
-    @endif
+    @include('includes/alert')
 
     <div class="row">
         <div class="col-md-4 my-3">
@@ -35,9 +22,9 @@
                 </div>
 
                 <div class="card-body">
-                    @foreach($Profiles as $Profile)
-                        <img src="{{ asset('storage/photos/upload/avatar/'.$Profile->avatar) }}"
-                            alt="{{ $Profile->avatar }}" class="rounded-circle my-4 ml-5 mr-5" width="200">
+                    @foreach($userProfiles as $userProfile)
+                        <img src="{{ asset('storage/photos/upload/avatar/'.$userProfile->avatar) }}"
+                            alt="{{ $userProfile->avatar }}" class="rounded-circle my-4 ml-5 mr-5" width="200">
                     @endforeach
                     <form class=" form-signin" action="/image-profile/{{ auth()->user()->id }}" method="POST"
                         enctype="multipart/form-data">
@@ -93,14 +80,16 @@
                                 <b>Jenis Kelamin :</b>
                                 {{ auth()->user()->jenis_kelamin }}
                             </h5>
+                            @if (auth()->user()->role_id == "1 or 2")
                             <h5 class="h5 mb-4 ml-2">
                                 <b>Bagian :</b>
-                                @foreach($Profiles as $Profile)
-                                    @foreach($Profile->Job as $Job)
+                                @foreach($userProfiles as $userProfile)
+                                    @foreach($userProfile->Job as $Job)
                                         {{ $Job->name }}
                                     @endforeach
                                 @endforeach
                             </h5>
+                            @endif
                             <h5 class="h5 mb-4 ml-2">
                                 <b>Nomor Handphone :</b>
                                 {{ auth()->user()->no_hp }}

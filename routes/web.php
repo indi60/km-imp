@@ -2,7 +2,6 @@
 
 use App\Article;
 use App\Description;
-use App\Job;
 use App\Project;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -19,16 +18,17 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    $Articles = Article::where('status_article_id', '1')->take(9)->get();
-    $Projects = Project::where('status_article_id', '1')->get();
-    $Descriptions = Description::all();
-    return view('landing_page.welcome', compact('Articles', 'Projects', 'Descriptions'));
+    $articles = Article::where('status_article_id', '1')->take(9)->get();
+    $projects = Project::where('status_article_id', '1')->where('category_id', '1')->get();
+    $descriptions = Description::all();
+    return view('landing_page.welcome', compact('articles', 'projects', 'descriptions'));
 })->name('welcome');
 
+//post
 Route::resource('post', 'PostController');
 Route::get('/post/{id}/show', 'PostController@show');
 
-Route::get('/reporter', 'HomeController@index')->name('reporter');
+Route::resource('issue', 'Admin\IssueController');
 
 Auth::routes();
 
@@ -48,30 +48,29 @@ Route::post('ckeditor/store', 'TicketController@store')->name('upload.store');
 Route::post('ckeditor/update{$id}', 'TicketController@update')->name('upload.update');
 
 Route::group(['middleware' => ['auth', 'CekRole:1,2,3']], function () {
+    Route::get('/home', 'HomeController@index')->name('home');
+    Route::resource('article', 'ArticleController');
     //filter status
     Route::get('/project/{id}/filter_status_open', 'TicketController@filter_status_open');
     Route::get('/project/{id}/filter_status_closed', 'TicketController@filter_status_closed');
+
+    Route::get('/ticket/{id}/closed_ticket', 'TicketController@closed_ticket');
+    Route::get('/ticket/{id}/reopen_ticket', 'TicketController@reopen_ticket');
+
+    Route::get('/ticket/filter_status_open_all', 'TicketController@filter_status_open_all');
+    Route::get('/ticket/filter_status_closed_all', 'TicketController@filter_status_closed_all');
 
     Route::put('profile/password', 'ProfileController@changePassword')->name('profile.password');
     Route::get('/article/{id}/show', 'ArticleController@show');
 
     //ticket
-    Route::get('/project/ticket', 'TicketController@index');
+    Route::get('/ticket', 'TicketController@index');
     Route::get('/project/ticket/create', 'TicketController@create');
     Route::post('/project/ticket', 'TicketController@store');
     Route::get('/project/ticket/{id}/edit', 'TicketController@edit');
     Route::put('/project/ticket/{id}', 'TicketController@update');
     Route::get('/project/ticket/{id}/show', 'TicketController@show');
     Route::delete('/project/ticket/{id}', 'TicketController@destroy');
-});
-
-Route::group(['middleware' => ['auth', 'CekRole:1,2']], function () {
-    Route::get('/home', 'HomeController@index')->name('home');
-    Route::resource('article', 'ArticleController');
-
-    //project
-    Route::get('/project', 'Admin\ProjectController@index');
-    Route::get('/project/{id}/ticket', 'Admin\ProjectController@show');
 
     //profile
     Route::resource('profile', 'ProfileController');
@@ -82,11 +81,16 @@ Route::group(['middleware' => ['auth', 'CekRole:1,2']], function () {
     Route::resource('comment-reply', 'CommentReplyController');
 });
 
+Route::group(['middleware' => ['auth', 'CekRole:1,2']], function () {
+    //project
+    Route::get('/project', 'Admin\ProjectController@index');
+    Route::get('/project/{id}/ticket', 'Admin\ProjectController@show');
+});
+
 Route::group(['middleware' => ['auth', 'CekRole:1']], function () {
     Route::resource('manage-member', 'Admin\ManageMemberController');
     Route::resource('category-project', 'Admin\CategoryProjectController');
     Route::resource('laporan', 'Admin\LaporanController');
-    Route::resource('issue', 'Admin\IssueController');
 
     //approve guest user
     Route::put('manage-member/approve/{id}', 'Admin\ManageMemberController@approve');
@@ -112,8 +116,4 @@ Route::group(['middleware' => ['auth', 'CekRole:1']], function () {
     Route::get('/project/{id}/edit', 'Admin\ProjectController@edit');
     Route::put('/project/{id}', 'Admin\ProjectController@update');
     Route::delete('/project/{id}', 'Admin\ProjectController@destroy');
-});
-
-Route::group(['middleware' => ['auth', 'CekRole:1,2,3']], function () {
-    Route::resource('article', 'ArticleController');
 });

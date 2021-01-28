@@ -9,22 +9,8 @@
         <h1 class="h3 mb-0" style="font-size: 32px; color: black"><b>Data Kategori Project</b></h1>
     </div>
 
-    <!-- Flash Data -->
-    @if(session('status'))
-    <div class="alert alert-success alert-dismissible fade show" role="alert">
-        {{ session('status') }}
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-        </button>
-    </div>
-    @elseif(session('statusDelete'))
-    <div class="alert alert-danger alert-dismissible fade show" role="alert">
-        {{ session('statusDelete') }}
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-        </button>
-    </div>
-    @endif
+    @include('includes/alert')
+
     <!-- DataTales Example -->
     <div class="card shadow mb-4">
         <div class="card-header py-3">
@@ -46,15 +32,15 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach($CategoryProjects as $CategoryProject)
+                        @foreach($categoryProjects as $categoryProject)
                         <tr>
                             <th scope="row" class="text-center"><strong>{{ $loop->iteration }}</strong></th>
-                            <td class="text-center">{{ $CategoryProject->name }}</td>
+                            <td class="text-center">{{ $categoryProject->name }}</td>
                             <td class="text-center">
-                                <a href="/category-project/{{ $CategoryProject->id }}/edit" class="btn btn-small text-success">
+                                <a href="/category-project/{{ $categoryProject->id }}/edit" class="btn btn-small text-success">
                                     <i class="fa fa-edit"></i><span class="ml-2">Edit</span>
                                 </a>
-                                <form action="/category-project/{{ $CategoryProject->id }}" method="POST" class="d-inline">
+                                <form action="/category-project/{{ $categoryProject->id }}" method="POST" class="d-inline">
                                     @method('delete')
                                     @csrf
                                     <button type="submit" class="btn btn-small text-danger">

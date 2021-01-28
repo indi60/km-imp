@@ -2,6 +2,10 @@
 
 @section('title', 'Admin | Tambah Data Member')
 
+@section('css')
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/css/bootstrap-select.min.css">
+@endsection
+
 @section('container')
 <!-- Begin Page Content -->
 <div class="container-fluid">
@@ -46,12 +50,12 @@
                 <div class="form-group">
                     <label for="job_id">Job</label>
                     <div class="input-group mb-3">
-                        <select class="custom-select form-control @error('job_id') is-invalid @enderror" id="job_id"
-                            placeholder="Masukan Job" name="job_id" value="{{ old('job_id') }}">
-                            <option value="" selected>Pilih Job</option>
-                            @foreach($Jobs as $Job)
-                                <option value="{{ $Job->id }}">
-                                    {{ $Job->name }}
+                        <select class="custom-select selectpicker form-control @error('job_id') is-invalid @enderror" id="job_id"
+                            placeholder="Masukan Job" name="job_id" value="{{ old('job_id') }}" data-live-search="true">
+                            <option value="" selected disabled>Pilih Job</option>
+                            @foreach($jobs as $job)
+                                <option value="{{ $job->id }}">
+                                    {{ $job->name }}
                                 </option>
                             @endforeach
                         </select>
@@ -110,4 +114,13 @@
     </a>
 </div>
 <!-- container-fluid -->
+@endsection
+
+@section('js')
+<script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/bootstrap-select.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $('select').selectpicker();
+    });
+</script>
 @endsection

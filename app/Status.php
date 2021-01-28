@@ -12,7 +12,7 @@ class Status extends Model
         'color',
     ];
 
-    public function Ticket()
+    public function ticket()
     {
         return $this->belongsTo('App\Ticket');
     }

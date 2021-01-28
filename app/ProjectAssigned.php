@@ -12,12 +12,12 @@ class ProjectAssigned extends Model
         'assigned_to_user',
     ];
 
-    public function Project()
+    public function project()
     {
         return $this->belongsTo('App\Project');
     }
 
-    public function AssignedTo()
+    public function assigned_to()
     {
         return $this->hasOne('App\User', 'id', 'assigned_to_user');
     }

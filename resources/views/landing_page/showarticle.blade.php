@@ -57,11 +57,11 @@
                                     </li>
                                 @else
                                     <li class="nav-item">
-                                        <a class="btn btn-singin" href="{{ route('login') }}">Sign In <i class="fas fa-arrow-right"></i></a>
+                                        <a class="btn btn-singin" style="border-radius: 15px" href="{{ route('login') }}">Sign In <i class="fas fa-arrow-right"></i></a>
                                     </li>
                                     @if(Route::has('register'))
                                         <li class="nav-item">
-                                            <a class="btn btn-singin" href="{{ route('register') }}">Sign Up</a>
+                                            <a class="btn btn-singup" style="border-radius: 15px" href="{{ route('register') }}">Sign Up</a>
                                         </li>
                                     @endif
                                 @endauth
@@ -94,12 +94,11 @@
                     <div class="col-lg-9 col-md-9 col-xs-12 blog-item mb-2">
                         <!-- Blog Item Starts -->
                         <div class="blog-item-wrap">
-                            <div class="blog-item-text">
+                            <div class="blog-item-text container-fluid">
                                 <h3>
-                                    {{ $Articles->title }}
+                                    {{ $articles->title }}
                                 </h3>
-                                {!! $Articles->content !!}
-                                5 Min read
+                                {!! $articles->content !!}
                             </div>
                             <div class="author">
                                 <span class="name"><i class="fas fa-user"></i>Posted by Admin</span>
@@ -118,8 +117,8 @@
                                 <h3>Categories</h3>
                                 <hr>
                                 <ul>
-                                    @foreach ($Jobs as $Job)
-                                        <li><a href=""><i class="fas fa-circle" style="color:  #1351B5"></i><span class="ml-2">{{$Job->name}}</span></a></li>
+                                    @foreach ($jobs as $job)
+                                        <li><a href=""><i class="fas fa-circle" style="color:  #1351B5"></i><span class="ml-2">{{$job->name}}</span></a></li>
                                     @endforeach
                                 </ul>
                             </div>
@@ -188,7 +187,7 @@
                         <div class="col-lg-4">
                             <p class="p-small">Copyright ©
                                 <a href="https://impstudio.id/">
-                                    IMPStudio 2020
+                                    IMPStudio {{ Date('Y') }}
                                 </a>
                             </p>
                         </div>

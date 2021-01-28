@@ -23,7 +23,7 @@
 
     <!-- Page Wrapper -->
     <div id="wrapper">
-        @include('layouts.partials.sidebar')
+        @include('layouts.partials.sidebar.'.Auth::user()->role->find(auth()->user()->id)->name)
 
         <!-- Content Wrapper -->
         <div id="content-wrapper" class="d-flex flex-column">
@@ -31,10 +31,9 @@
             <div id="content" class="bg-white">
                 @include('layouts.partials.topbar')
                 @yield('container')
-                <!-- End of Main Content -->
-            @include('layouts.partials.footer')
             </div>
-            
+            <!-- End of Main Content -->
+            @include('layouts.partials.footer')
         </div>
         <!-- End of Content Wrapper -->
     </div>

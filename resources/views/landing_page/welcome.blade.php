@@ -8,14 +8,13 @@
     <meta name="keywords" content="Bootstrap, Landing page, Template, Business, Service">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <meta name="author" content="Grayrids">
-    <title>KOMA | Halaman Depan</title>
+    <title>KOMA | Helpdesk</title>
 
     <!-- Favicon  -->
     <link rel="shortcut icon" href="{{ asset('assets/images/logo/koma-logo.svg') }}">
 
     <!-- Bootstrap CSS -->
-    <link href="{{ asset('assets/vendor/fontawesome-free/css/all.min.css') }}"
-        rel="stylesheet" type="text/css">
+    <link href="{{ asset('assets/vendor/fontawesome-free/css/all.min.css') }}" rel="stylesheet" type="text/css">
     <link rel="stylesheet" href="{{ asset('assets/css/bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/animate.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/LineIcons.css') }}">
@@ -109,14 +108,9 @@
                                     KOMA Helpdesk is a management app that was build for the purpose of "easily manage everything" with an easy to navigate interface, feather-weight load time and responsive interactions.
                                 </p>
                             </div>
-                            @if(Route::has('login'))
-                                @auth
-                            @else
                             <div class="header-button">
                                 <a class="btn btn-common" style="border-radius: 15px" href="{{ route('login') }}">Learn More<i class="fas fa-arrow-right ml-3"></i></a>
                             </div>
-                            @endauth
-                            @endif
                         </div>
                     </div>
                 </div>
@@ -134,8 +128,8 @@
                         <div class="business-item-info">
                             <h3>What is KOMA Helpdesk?</h3>
                             <p class="text-justify">
-                                @foreach ($Descriptions as $Description)
-                                    {{$Description->desc}}
+                                @foreach ($descriptions as $description)
+                                    {{$description->desc}}
                                 @endforeach
                             </p>
                         </div>
@@ -171,25 +165,25 @@
                 </div>
                 <!-- End Row -->
 
-                @if($Articles->count() > 0)
+                @if($articles->count() > 0)
                     <!-- Start Row -->
                     <div class="row">
-                        @foreach($Articles as $Article)
+                        @foreach($articles as $article)
                             <!-- Start Col -->
                                 <div class="col-lg-4 col-md-6 col-xs-12 blog-item mb-3">
                                     <!-- Blog Item Starts -->
                                     <div class="blog-item-wrapper">
                                         <div class="blog-item-text">
                                             <h3>
-                                                <a href="/post/{{$Article->id}}/show">{{ $Article->title }}</a>
+                                                <a href="/post/{{$article->id}}/show">{{ $article->title }}</a>
                                             </h3>
-                                            <a href="/post/{{$Article->id}}/show" class="read-more">5 Min read</a>
+                                            <a href="/post/{{$article->id}}/show" class="read-more"></a>
                                         </div>
                                         <div class="author">
-                                            <span class="name"><i class="fas fa-user"></i><a href="/post/{{$Article->id}}/show">Posted by
-                                                    {{ $Article->author_name }}</a></span>
+                                            <span class="name"><i class="fas fa-user"></i><a href="/post/{{$article->id}}/show">Posted by
+                                                    {{ $article->author_name }}</a></span>
                                             <span class="date float-right"><i class="fas fa-calendar-alt"></i><a
-                                                    href="/post/{{$Article->id}}/show">{{ $Article->created_at->diffForHumans() }}</a></span>
+                                                    href="/post/{{$article->id}}/show">{{ $article->created_at->diffForHumans() }}</a></span>
                                         </div>
                                     </div>
                                     <!-- Blog Item Wrapper Ends-->
@@ -232,88 +226,59 @@
                 <div class="row">
                     <!-- Start Col -->
                     <div class="col-lg-8 col-md-12">
-                        <form id="contactForm" action="/project/ticket" method="POST">
+                        <form id="contactForm" action="/issue" method="POST">
                             @csrf
-
-                            @if(Route::has('login'))
-                                @auth
-                                    <input type="hidden" id="user_id" name="user_id" value="{{ Auth()->user()->id }}">
-                                    <input type="hidden" id="role_id" name="role_id" value="{{ Auth()->user()->role_id }}">
-                                    <input type="hidden" id="author_name" name="author_name" value="{{ Auth()->user()->name }}">
-                                    <input type="hidden" id="author_email" name="author_email" value="{{ Auth()->user()->email }}">
-                                    <input type="hidden" id="status_id" name="status_id" value="1">
-                                @else
-                                @endauth
-                                <div class="row">
-                                        <div class="col-md-12">
-                                            <div class="form-group">
-                                                <input type="text" class="form-control" id="title" name="title"
-                                                    placeholder="Judul issue" data-error="Please enter your title">
-                                                <div class="help-block with-errors"></div>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-12">
-                                            <div class="form-group">
-                                                <div class="input-group mb-3">
-                                                    <select class="custom-select form-control @error('project_id') is-invalid @enderror"
-                                                        id="project_id" name="project_id"
-                                                        value="{{ old('project_id') }}">
-                                                        <option value="0">Pilih Aplikasi</option>
-                                                        @foreach($Projects as $Project)
-                                                            <option value="{{ $Project->id }}">
-                                                                {{ $Project->name }}
-                                                            </option>
-                                                        @endforeach
-                                                    </select>
-                                                    @error('project_id')
-                                                        <div class="help-block with-errors">{{$message}}</div>
-                                                    @enderror
-                                                </div>
-                                            </div>
-                                        </div>
-                                        {{-- <div class="col-md-6">
-                                            <div class="form-group">
-                                                <input type="text" class="form-control" id="name" name="name" placeholder="Name"
-                                                    data-error="Please enter your name">
-                                                <div class="help-block with-errors"></div>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <div class="form-group">
-                                                <input type="text" placeholder="Subject" id="msg_subject" class="form-control"
-                                                    name="msg_subject" data-error="Please enter your subject">
-                                                <div class="help-block with-errors"></div>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <div class="form-group">
-                                                <input type="text" class="form-control" id="email" name="email"
-                                                    placeholder="Email" data-error="Please enter your Email">
-                                                <div class="help-block with-errors"></div>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <div class="form-group">
-                                                <input type="text" placeholder="Budget" id="budget" class="form-control"
-                                                    name="budget" data-error="Please enter your Budget">
-                                                <div class="help-block with-errors"></div>
-                                            </div>
-                                        </div> --}}
-                                        <div class="col-md-12">
-                                            <div class="form-group">
-                                                <textarea class="form-control" id="content" name="content"
-                                                    placeholder="Write content" rows="4"
-                                                    data-error="Write your content"></textarea>
-                                                <div class="help-block with-errors"></div>
-                                            </div>
-                                            <div class="submit-button">
-                                                <button class="btn btn-common" style="border-radius: 15px" id="submit" type="submit">Submit</button>
-                                                    <div id="msgSubmit" class="h3 hidden"></div>
-                                                <div class="clearfix"></div>
-                                            </div>
-                                        </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" id="name" name="author_name" placeholder="Nama">
+                                        <div class="help-block with-errors"></div>
                                     </div>
-                            @endif
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" id="email" name="author_email" placeholder="Email">
+                                        <div class="help-block with-errors"></div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <input type="text" placeholder="Subject" id="title" class="form-control" name="title">
+                                        <div class="help-block with-errors"></div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <select class="custom-select form-control @error('project_id') is-invalid @enderror"
+                                            id="project_id" name="project_id"
+                                            value="{{ old('project_id') }}">
+                                            <option value="0">Pilih Aplikasi</option>
+                                            @foreach($projects as $project)
+                                                <option value="{{ $project->id }}">
+                                                    {{ $project->name }}
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                        @error('project_id')
+                                            <div class="help-block with-errors">{{$message}}</div>
+                                        @enderror
+                                        <div class="help-block with-errors"></div>
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <textarea class="form-control" id="content" name="content"
+                                            placeholder="Write content" rows="4"
+                                            data-error="Write your content"></textarea>
+                                        <div class="help-block with-errors"></div>
+                                    </div>
+                                    <div class="submit-button">
+                                        <button class="btn btn-common" style="border-radius: 15px" id="submit" type="submit">Submit</button>
+                                            <div id="msgSubmit" class="h3 hidden"></div>
+                                        <div class="clearfix"></div>
+                                    </div>
+                                </div>
+                            </div>
                         </form>
                     </div>
                     <!-- End Col -->
@@ -387,12 +352,12 @@
                 <!-- End Row -->
                 <div class="row my-3">
                     <div class="col-lg-8">
-                        <p class="p-small">Knowledge & Media Management Helpdesk powered by IMPStudio</p>
+                        <p class="p-small text-lg-left">Knowledge & Media Management Helpdesk powered by IMPStudio</p>
                     </div>
                     <div class="col-lg-4">
-                        <p class="p-small">Copyright ©
+                        <p class="p-small text-lg-right">Copyright ©
                             <a href="https://impstudio.id/">
-                                IMPStudio 2021
+                                IMPStudio {{ Date('Y') }}
                             </a>
                         </p>
                     </div>
@@ -402,7 +367,6 @@
         <!-- Footer area End -->
     </footer>
     <!-- Footer Section End -->
-
 
     <!-- Go To Top Link -->
     <a href="#" class="back-to-top">
