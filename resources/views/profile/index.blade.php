@@ -22,10 +22,15 @@
                 </div>
 
                 <div class="card-body">
-                    @foreach($userProfiles as $userProfile)
-                        <img src="{{ asset('storage/photos/upload/avatar/'.$userProfile->avatar) }}"
-                            alt="{{ $userProfile->avatar }}" class="rounded-circle my-4 ml-5 mr-5" width="200">
-                    @endforeach
+                    @if (auth()->user()->avatar === null)
+                        <img src="{{ asset('storage/photos/upload/avatar/default.png') }}"
+                            alt="avatar" class="rounded-circle my-4 ml-5 mr-5" width="200">
+                    @else
+                        @foreach($userProfiles as $userProfile)
+                            <img src="{{ asset('storage/photos/upload/avatar/'.$userProfile->avatar) }}"
+                                alt="{{ $userProfile->avatar }}" class="rounded-circle my-4 ml-5 mr-5" width="200">
+                        @endforeach
+                    @endif
                     <form class=" form-signin" action="/image-profile/{{ auth()->user()->id }}" method="POST"
                         enctype="multipart/form-data">
                         @method('put')

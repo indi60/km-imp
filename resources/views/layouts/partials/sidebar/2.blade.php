@@ -42,8 +42,13 @@
     <li class="nav-item">
             <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#profile" aria-expanded="true"
                 aria-controls="collapseUtilities">
-                <img src="{{ asset('storage/photos/upload/avatar/'.Auth::user()->avatar) }}" alt="avatar" width="30" class="img-fluid rounded-circle" srcset="">
-                <span class="ml-md-4 mb-sm-2" style="font-size: 17.5px"><b>{{ Auth::user()->name }}</b></span>
+                @if (auth()->user()->avatar === null)
+                    <img src="{{ asset('storage/photos/upload/avatar/default.png') }}" alt="avatar" width="30" class="img-fluid rounded-circle" srcset="">
+                    <span class="ml-md-4 mb-sm-2" style="font-size: 17.5px"><b>{{ Auth::user()->name }}</b></span>
+                @else
+                    <img src="{{ asset('storage/photos/upload/avatar/'.Auth::user()->avatar) }}" alt="avatar" width="30" class="img-fluid rounded-circle" srcset="">
+                    <span class="ml-md-4 mb-sm-2" style="font-size: 17.5px"><b>{{ Auth::user()->name }}</b></span>
+                @endif
             </a>
             <div id="profile" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
                 <div class="bg-white py-2 collapse-inner rounded">

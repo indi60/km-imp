@@ -23,8 +23,8 @@
 
     <!-- Page Wrapper -->
     <div id="wrapper">
-        @include('layouts.partials.sidebar.'.Auth::user()->role->find(auth()->user()->id)->name)
-
+        @include('layouts.partials.sidebar.'.Auth::user()->role_id)
+{{-- ->find(auth()->user()->id)->name --}}
         <!-- Content Wrapper -->
         <div id="content-wrapper" class="d-flex flex-column">
             <!-- Main Content -->
